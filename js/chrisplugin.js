@@ -24,6 +24,7 @@
     2023/11/20  18:01:04 Bata 1.0.18 // 新增hintbox函式
     2023/12/04  14:23:29 Bata 1.0.19 // 新增tag函式
     2024/01/08  21:17:23 Bata 1.0.25 // 新增on*函式
+    2024/01/16  18:25:29 Bata 1.1.0 // 函式大更新
 
         |-------    -----    -                     -     -----  -----  -----   -------|
        |-------    -        -            - - -          -                     -------|
@@ -185,7 +186,8 @@ function domgetid(selector){
     return document.getElementById(selector)
 }
 
-function domgetall(selector){
+function domgetall(selector,callback=function(){}){
+    document.querySelectorAll(selector).forEach(function(event){ callback(event) })
     return document.querySelectorAll(selector)
 }
 
@@ -229,7 +231,7 @@ function oldajax(method,url,send=null,header=[["Content-type","multipart/form-da
     return xmlrequest
 }
 
-function ajax(method,url,onloadcallback,send=null,header=[["Content-type","multipart/form-data"]],callback=[]){
+function ajax(method,url,onloadcallback,send=null,header=[["Content-type","multipart/form-data"]],statechange=[function(){},function(){},function(){},function(){}],callback=[]){
     let check=true
     if(method==null){
         conlog("function ajax method requset","red","12")
@@ -245,23 +247,28 @@ function ajax(method,url,onloadcallback,send=null,header=[["Content-type","multi
     }
     if(check){
         let xmlhttprequest=new XMLHttpRequest()
+
         xmlhttprequest.open(method,url)
-        if(!send instanceof FormData){ // Don't set Content-Type for FormData
-            for(let i=0;i<header.length;i=i+1){
-                xmlhttprequest.setRequestHeader(header[i][0],header[i][1])
-            }
+
+        for(let i=0;i<header.length;i=i+1){
+            xmlhttprequest.setRequestHeader(header[i][0],header[i][1])
         }
+
         xmlhttprequest.onreadystatechange=function(){
             if(this.readyState==0){
+                statechange[0](this)
             }
 
             if(this.readyState==1){
+                statechange[1](this)
             }
 
             if(this.readyState==2){
+                statechange[2](this)
             }
 
             if(this.readyState==3){
+                statechange[3](this)
             }
 
             if(this.readyState==4){
@@ -2183,16 +2190,14 @@ function onmerchantvalidation(element,callback=function(){}){
 }
 
 // onmessage
-function message(element,callback=function(){}){
-    domgetall(element).forEach(function(event){
-        event.onmessage=function(onevent){ callback(event,onevent) }
-    })
-}
+// function message(element,callback=function(){}){
+//     domgetall(element).forEach(function(event){
+//         event.onmessage=function(onevent){ callback(event,onevent) }
+//     })
+// }
 
-function onmessage(element,callback=function(){}){
-    domgetall(element).forEach(function(event){
-        event.onmessage=function(onevent){ callback(event,onevent) }
-    })
+function message(callback=function(){}){
+    window.onmessage=function(onevent){ callback(this,onevent) }
 }
 
 // onmessageerror
@@ -3824,6 +3829,35 @@ function windowload(callback=function(){}){
     window.onload=function(event){ callback(event) }
 }
 // on* event END
+
+// dom control START
+function value(element,value,keep=false){
+    domgetall(element,function(event){
+        if(keep){
+            event.value=`
+                ${event.value}
+                ${value}
+            `
+        }else{
+            event.value=value
+        }
+    })
+}
+
+function innerhtml(element,value,keep=true){
+    domgetall(element,function(event){
+        if(keep){
+            event.innerHTML=`
+                ${event.innerHTML}
+                ${value}
+            `
+        }else{
+            event.innerHTML=value
+        }
+    })
+}
+// dom control END
+
 
 // window onload START
 windowload(function(event){
