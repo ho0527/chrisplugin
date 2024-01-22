@@ -3858,7 +3858,6 @@ function innerhtml(element,value,keep=true){
 }
 // dom control END
 
-
 // window onload START
 windowload(function(event){
     if(domgetid("lightbox")){
