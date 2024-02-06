@@ -25,6 +25,7 @@
     2023/12/04  14:23:29 Bata 1.0.19 // 新增tag函式
     2024/01/08  21:17:23 Bata 1.0.25 // 新增on*函式
     2024/01/16  18:25:29 Bata 2.0.0 // 函式大更新
+    2024/02/06  22:38:46 Bata 2.1.0 // 函式衝突更新
 
         |-------    -----    -                     -     -----  -----  -----   -------|
        |-------    -        -            - - -          -                     -------|
@@ -1722,11 +1723,11 @@ function onfocusout(element,callback=function(){}){
 }
 
 // onformdata
-function formdata(element,callback=function(){}){
-    domgetall(element).forEach(function(event){
-        event.onformdata=function(onevent){ callback(event,onevent) }
-    })
-}
+// function formdata(element,callback=function(){}){
+//     domgetall(element).forEach(function(event){
+//         event.onformdata=function(onevent){ callback(event,onevent) }
+//     })
+// }
 
 function onformdata(element,callback=function(){}){
     domgetall(element).forEach(function(event){
