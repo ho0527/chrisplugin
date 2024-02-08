@@ -128,6 +128,13 @@ body[scroll]::-webkit-scrollbar-thumb{
     font-size: 15px;
 }
 
+.hiintboxbuttondiv{
+    position: absolute;
+    bottom: 0px;
+    left: 5px;
+    width: calc(100% - 10px);
+}
+
 .hintboxbuttonleft{
     position: absolute;
     bottom: 0px;
