@@ -2197,7 +2197,7 @@ function onmerchantvalidation(element,callback=function(){}){
 //     })
 // }
 
-function message(callback=function(){}){
+function getmessage(callback=function(){}){
     window.onmessage=function(onevent){ callback(this,onevent) }
 }
 
