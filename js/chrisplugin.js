@@ -3859,8 +3859,17 @@ function innerhtml(element,value,keep=true){
 }
 // dom control END
 
+function href(url){
+    if(url=="reload"){
+        location.reload()
+    }else{
+        location.href=url
+    }
+}
+
 // window onload START
 windowload(function(event){
+    // 刷新lightbox
     if(domgetid("lightbox")){
         domgetid("lightbox").style.display="none"
         domgetid("lightbox").classList.add("lightboxmask")
@@ -3869,11 +3878,21 @@ windowload(function(event){
         },100)
     }
 
+    // 順滑移動#
     if(location.href.split("#").length>1){
         let id=location.href.split("#")[location.href.split("#").length-1]
         if(domgetid(id)){
             domgetid(id).scrollIntoView({ behavior: "smooth" })
         }
     }
+
+    // 將被onchange的input|textarea清除error
+    onchange("input",function(element,event){
+        element.parentNode.classList.remove("error")
+    })
+
+    onchange("textarea",function(element,event){
+        element.parentNode.classList.remove("error")
+    })
 })
 // window onload END
