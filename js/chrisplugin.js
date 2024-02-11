@@ -3845,15 +3845,28 @@ function value(element,value,keep=false){
     })
 }
 
-function innerhtml(element,value,keep=true){
+function innerhtml(element,text,keep=true){
     domgetall(element,function(event){
         if(keep){
             event.innerHTML=`
                 ${event.innerHTML}
-                ${value}
+                ${text}
             `
         }else{
-            event.innerHTML=value
+            event.innerHTML=text
+        }
+    })
+}
+
+function value(element,text,keep=false){
+    domgetall(element,function(event){
+        if(keep){
+            event.value=`
+                ${event.value}
+                ${text}
+            `
+        }else{
+            event.value=text
         }
     })
 }
