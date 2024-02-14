@@ -3788,17 +3788,17 @@ function onwebkitmouseforcewillbegin(element,callback=function(){}){
 }
 
 // onWebSocket
-function WebSocket(element,callback=function(){}){
-	domgetall(element).forEach(function(event){
-		event.onWebSocket=function(onevent){ callback(event,onevent) }
-	})
-}
+// function WebSocket(element,callback=function(){}){
+// 	domgetall(element).forEach(function(event){
+// 		event.onWebSocket=function(onevent){ callback(event,onevent) }
+// 	})
+// }
 
-function onWebSocket(element,callback=function(){}){
-	domgetall(element).forEach(function(event){
-		event.onWebSocket=function(onevent){ callback(event,onevent) }
-	})
-}
+// function onWebSocket(element,callback=function(){}){
+// 	domgetall(element).forEach(function(event){
+// 		event.onWebSocket=function(onevent){ callback(event,onevent) }
+// 	})
+// }
 
 // onwheel
 function wheel(element,callback=function(){}){
