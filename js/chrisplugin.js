@@ -3908,6 +3908,34 @@ function getfile(){
 	return location.href.split("/")[location.href.split("/").length-1].split("?")[0].split("#")[0]
 }
 
+function style(element,style=[]){
+	if(typeof element=="string"){
+		domgetall(element).forEach(function(event){
+			for(let i=0;i<style.length;i=i+1){
+				event.style[style[i][0]]=style[i][1]
+			}
+		})
+	}else{
+		for(let i=0;i<style.length;i=i+1){
+			element.style[style[i][0]]=style[i][1]
+		}
+	}
+}
+
+function removestyle(element,style=[]){
+	if(typeof element=="string"){
+		domgetall(element).forEach(function(event){
+			for(let i=0;i<style.length;i=i+1){
+				event.style[style[i][0]]="initial"
+			}
+		})
+	}else{
+		for(let i=0;i<style.length;i=i+1){
+			element.style[style[i][0]]="initial"
+		}
+	}
+}
+
 function addstyle(element,style=[]){
 	domgetall(element).forEach(function(event){
 		for(let i=0;i<style.length;i=i+1){
