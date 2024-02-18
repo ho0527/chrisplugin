@@ -3846,21 +3846,27 @@ function value(element,value,keep=false){
 }
 
 function innerhtml(element,text,keep=true){
-	data=[]
+	if(typeof element=="string"){
+		data=[]
 
-	domgetall(element,function(event){
-		if(keep){
-			event.innerHTML=`
-				${event.innerHTML}
-				${text}
-			`
-		}else{
-			event.innerHTML=text
+		domgetall(element,function(event){
+			if(keep){
+				event.innerHTML=`
+					${event.innerHTML}
+					${text}
+				`
+			}else{
+				event.innerHTML=text
+			}
+			data.push(event.innerHTML)
+		})
+
+		return data
+	}else{
+		for(let i=0;i<style.length;i=i+1){
+			element.style[style[i][0]]=style[i][1]
 		}
-		data.push(event.innerHTML)
-	})
-
-	return data
+	}
 }
 
 function value(element,text,keep=false){
