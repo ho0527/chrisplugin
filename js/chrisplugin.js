@@ -232,7 +232,7 @@ function oldajax(method,url,send=null,header=[["Content-type","multipart/form-da
 	return xmlrequest
 }
 
-function ajax(method,url,onloadcallback,send=null,header=[["Content-type","multipart/form-data"]],statechange=[function(){},function(){},function(){},function(){}],callback=[]){
+function ajax(method,url,onloadcallback,send=null,header=[["Content-type","multipart/form-data"]],progresscallback=function(event){},statechange=[function(){},function(){},function(){},function(){}],callback=[]){
 	let check=true
 	if(method==null){
 		conlog("function ajax method requset","red","12")
@@ -282,10 +282,19 @@ function ajax(method,url,onloadcallback,send=null,header=[["Content-type","multi
 				}
 			}
 		}
-		xmlhttprequest.send(send)
+
+		xmlhttprequest.upload.onprogress=function(event){
+			if(event.lengthComputable){
+				progresscallback(event,(event.loaded/event.total)*100)
+			}else{
+				console.warn("[EXP_UPLOADDATA WARNING]function ajax warn: onprogress can't be progress")
+			}
+		}
+
 		for(let i=0;i<callback.length;i=i+1){
 			xmlhttprequest[callback[i][0]]=function(){ callback[i][1](this) }
 		}
+		xmlhttprequest.send(send)
 		return xmlhttprequest
 	}
 }
@@ -1216,11 +1225,11 @@ function onchange(element,callback=function(){}){
 }
 
 // onclick
-// function click(element,callback=function(){}){
-//     domgetall(element).forEach(function(event){
-//         event.onclick=function(onevent){ callback(event,onevent) }
-//     })
-// }
+function click(element){
+	domgetall(element).forEach(function(event){
+		event.click()
+	})
+}
 
 function onclick(element,callback=function(){}){
 	domgetall(element).forEach(function(event){
