@@ -299,7 +299,7 @@ function ajax(method,url,onloadcallback,send=null,header=[["Content-type","multi
 	}
 }
 
-function newajax(method,url,onloadcallback,send=null,header=[["Content-type","multipart/form-data"]],callback=[]){
+function newajax(method,url,onloadcallback,send=null,header=[["Content-type","multipart/form-data"]],progresscallback=function(event){},statechange=[function(){},function(){},function(){},function(){}],callback=[]){
 	let check=true
 	if(method==null){
 		conlog("function ajax method requset","red","12")
@@ -315,25 +315,53 @@ function newajax(method,url,onloadcallback,send=null,header=[["Content-type","mu
 	}
 	if(check){
 		let xmlhttprequest=new XMLHttpRequest()
-		xmlhttprequest.open(method,url)
-		if(!send instanceof FormData){ // Don't set Content-Type for FormData
-			for(let i=0;i<header.length;i=i+1){
-				xmlhttprequest.setRequestHeader(header[i][0],header[i][1])
-			}
-		}
-		xmlhttprequest.onload=function(){
-			let data=this.responseText
 
-			try{
-				data=JSON.parse(this.responseText)
-			}finally{
-				onloadcallback(this,data)
+		xmlhttprequest.open(method,url)
+
+		for(let i=0;i<header.length;i=i+1){
+			xmlhttprequest.setRequestHeader(header[i][0],header[i][1])
+		}
+
+		xmlhttprequest.onreadystatechange=function(){
+			if(this.readyState==0){
+				statechange[0](this)
+			}
+
+			if(this.readyState==1){
+				statechange[1](this)
+			}
+
+			if(this.readyState==2){
+				statechange[2](this)
+			}
+
+			if(this.readyState==3){
+				statechange[3](this)
+			}
+
+			if(this.readyState==4){
+				let data=this.responseText
+
+				try{
+					data=JSON.parse(this.responseText)
+				}finally{
+					onloadcallback(this,data)
+				}
 			}
 		}
-		xmlhttprequest.send(send)
+
+		xmlhttprequest.upload.onprogress=function(event){
+			if(event.lengthComputable){
+				progresscallback(event,(event.loaded/event.total)*100)
+			}else{
+				console.warn("[EXP_UPLOADDATA WARNING]function ajax warn: onprogress can't be progress")
+			}
+		}
+
 		for(let i=0;i<callback.length;i=i+1){
 			xmlhttprequest[callback[i][0]]=function(){ callback[i][1](this) }
 		}
+		xmlhttprequest.send(send)
 		return xmlhttprequest
 	}
 }
