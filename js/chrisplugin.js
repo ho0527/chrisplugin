@@ -4016,6 +4016,30 @@ function getget(key){
 	}
 }
 
+function array(data){
+	return Array(data)
+}
+
+function json(data){
+	return JSON.parse(data)
+}
+
+function string(data){
+	if(typeof data=="object"){
+		return JSON.stringify(data)
+	}else{
+		return String(data)
+	}
+}
+
+function int(data){
+	return parseInt(data)
+}
+
+function float(data){
+	return parseFloat(data)
+}
+
 // window onload START
 windowload(function(event){
 	// 刷新lightbox
