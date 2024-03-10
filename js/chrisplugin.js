@@ -3869,21 +3869,36 @@ function windowload(callback=function(){}){
 // on* event END
 
 // dom control START
-function value(element,value,keep=false){
-	domgetall(element,function(event){
-		if(keep){
-			event.value=`
-				${event.value}
-				${value}
-			`
-		}else{
-			event.value=value
-		}
-	})
-}
-
 function innerhtml(element,text,keep=true){
-	if(typeof element=="string"){
+	if(typeof element=="object"){
+		if(element.length){
+			data=[]
+
+			element.forEach(function(event){
+				if(keep){
+					event.innerHTML=`
+						${event.innerHTML}
+						${text}
+					`
+				}else{
+					event.innerHTML=text
+				}
+				data.push(event.innerHTML)
+			})
+
+			return data
+		}else{
+			if(keep){
+				element.innerHTML=`
+					${element.innerHTML}
+					${text}
+				`
+			}else{
+				element.innerHTML=text
+			}
+			return element.innerHTML
+		}
+	}else{
 		data=[]
 
 		domgetall(element,function(event){
@@ -3899,37 +3914,87 @@ function innerhtml(element,text,keep=true){
 		})
 
 		return data
-	}else{
-		for(let i=0;i<style.length;i=i+1){
-			element.style[style[i][0]]=style[i][1]
-		}
 	}
 }
 
 function value(element,text,keep=false){
-	data=[]
+	if(typeof element=="object"){
+		if(element.length){
+			data=[]
 
-	domgetall(element,function(event){
-		if(keep){
-			event.value=`
-				${event.value}
-				${text}
-			`
+			element.forEach(function(event){
+				if(keep){
+					event.value=`
+						${event.value}
+						${text}
+					`
+				}else{
+					event.value=text
+				}
+				data.push(event.value)
+			})
+
+			return data
 		}else{
-			event.value=text
+			if(keep){
+				element.value=`
+					${element.value}
+					${text}
+				`
+			}else{
+				element.value=text
+			}
+			return element.value
 		}
-		data.push(event.value)
-	})
+	}else{
+		data=[]
 
-	return data
+		domgetall(element,function(event){
+			if(keep){
+				event.value=`
+					${event.value}
+					${text}
+				`
+			}else{
+				event.value=text
+			}
+			data.push(event.value)
+		})
+
+		return data
+	}
 }
 
 function getvalue(element){
-	return domgetid(element).value
+	if(typeof element=="object"){
+		if(element.length){
+			let data=[]
+			element.forEach(function(event){
+				data.push(event.value)
+			})
+			return data
+		}else{
+			return element.value
+		}
+	}else{
+		return domgetid(element).value
+	}
 }
 
 function getinnerhtml(element){
-	return domgetid(element).innerHTML
+	if(typeof element=="object"){
+		if(element.length){
+			let data=[]
+			element.forEach(function(event){
+				data.push(event.innerHTML)
+			})
+			return data
+		}else{
+			return element.innerHTML
+		}
+	}else{
+		return domgetid(element).innerHTML
+	}
 }
 // dom control END
 
@@ -3943,7 +4008,7 @@ function href(url){
 	}
 }
 
-function dataset(key,element){
+function dataset(element,key){
 	return element.dataset[key]
 }
 
@@ -3952,55 +4017,107 @@ function getfile(){
 }
 
 function style(element,style=[]){
-	if(typeof element=="string"){
+	if(typeof element=="object"){
+		if(element.length){
+			element.forEach(function(event){
+				for(let i=0;i<style.length;i=i+1){
+					event.style[style[i][0]]=style[i][1]
+				}
+			})
+		}else{
+			for(let i=0;i<style.length;i=i+1){
+				element.style[style[i][0]]=style[i][1]
+			}
+		}
+	}else{
 		domgetall(element).forEach(function(event){
 			for(let i=0;i<style.length;i=i+1){
 				event.style[style[i][0]]=style[i][1]
 			}
 		})
-	}else{
-		for(let i=0;i<style.length;i=i+1){
-			element.style[style[i][0]]=style[i][1]
-		}
 	}
 }
 
 function removestyle(element,style=[]){
-	if(typeof element=="string"){
+	if(typeof element=="object"){
+		if(element.length){
+			element.forEach(function(event){
+				for(let i=0;i<style.length;i=i+1){
+					event.style[style[i][0]]="initial"
+				}
+			})
+		}else{
+			for(let i=0;i<style.length;i=i+1){
+				element.style[style[i][0]]="initial"
+			}
+		}
+	}else{
 		domgetall(element).forEach(function(event){
 			for(let i=0;i<style.length;i=i+1){
 				event.style[style[i][0]]="initial"
 			}
 		})
-	}else{
-		for(let i=0;i<style.length;i=i+1){
-			element.style[style[i][0]]="initial"
-		}
 	}
 }
 
 function addstyle(element,style=[]){
-	domgetall(element).forEach(function(event){
-		for(let i=0;i<style.length;i=i+1){
-			event.style[style[i][0]]=style[i][1]
+	if(typeof element=="object"){
+		if(element.length){
+			element.forEach(function(event){
+				for(let i=0;i<style.length;i=i+1){
+					event.style[style[i][0]]=style[i][1]
+				}
+			})
+		}else{
+			for(let i=0;i<style.length;i=i+1){
+				element.style[style[i][0]]=style[i][1]
+			}
 		}
-	})
+	}else{
+		domgetall(element).forEach(function(event){
+			for(let i=0;i<style.length;i=i+1){
+				event.style[style[i][0]]=style[i][1]
+			}
+		})
+	}
 }
 
 function addclass(element,classlist=[]){
-	domgetall(element).forEach(function(event){
-		for(let i=0;i<classlist.length;i=i+1){
-			event.classList.add(classlist[i])
+	if(typeof element=="object"){
+		if(element.length){
+			element.forEach(function(event){
+				event.classList=event.classList+" "+classlist.join(" ")
+			})
+		}else{
+			element.classList=element.classList+" "+classlist.join(" ")
 		}
-	})
+	}else{
+		domgetall(element).forEach(function(event){
+			event.classList=event.classList+" "+classlist.join(" ")
+		})
+	}
 }
 
 function removeclass(element,classlist=[]){
-	domgetall(element).forEach(function(event){
-		for(let i=0;i<classlist.length;i=i+1){
-			event.classList.remove(classlist[i])
+	if(typeof element=="object"){
+		if(element.length){
+			element.forEach(function(event){
+				for(let i=0;i<classlist.length;i=i+1){
+					event.classList.remove(classlist[i])
+				}
+			})
+		}else{
+			for(let i=0;i<classlist.length;i=i+1){
+				element.classList.remove(classlist[i])
+			}
 		}
-	})
+	}else{
+		domgetall(element).forEach(function(event){
+			for(let i=0;i<classlist.length;i=i+1){
+				event.classList.remove(classlist[i])
+			}
+		})
+	}
 }
 
 function getget(key){
@@ -4041,7 +4158,7 @@ function float(data){
 }
 
 // testing
-function rangeslider(target=null,value=null,step=null,set=null,range=false,scale=true,labels=true,tooltip=true,disabled=false,style="roundstyle",width=null,onchangecallback=null){
+function rangeslider(target=null,value=null,step=null,set=null,range=false,scale=true,labels=true,tooltip=true,style="roundstyle",lebel="",onchangecallback=null,stylelist=null){
 	let input
 	let inputdisplay
 	let slider
@@ -4056,7 +4173,7 @@ function rangeslider(target=null,value=null,step=null,set=null,range=false,scale
 	let step1
 	let tipl
 	let tipr
-	let timeout
+	let disabled
 	let values={
 		start: null,
 		end: null
@@ -4147,18 +4264,18 @@ function rangeslider(target=null,value=null,step=null,set=null,range=false,scale
 			values.end=values.start+1
 		}
 
-		pointerl.style.left=(values[activepointer]*step1-(pointerwidth/2))+"px";
+		pointerl.style.left=(values[activepointer]*step1-(pointerwidth/2))+"px"
 
 		if(range){
 			if(tooltip){
-				tipl.innerHTML=value[values.start]
-				tipr.innerHTML=value[values.end]
+				tipl.innerHTML=lebel+""+value[values.start]
+				tipr.innerHTML=lebel+""+value[values.end]
 			}
 			input.value=value[values.start]+","+value[values.end]
 			pointerr.style.left=(values.end*step1-(pointerwidth/2))+"px"
 		}else{
 			if(tooltip){
-				tipl.innerHTML=value[values.end];
+				tipl.innerHTML=lebel+""+value[values.end]
 			}
 			input.value=value[values.end];
 		}
@@ -4171,20 +4288,16 @@ function rangeslider(target=null,value=null,step=null,set=null,range=false,scale
 			values.start=0
 		}
 
-		selecte.style.width=(values.end-values.start)*step1+"px";
-		selecte.style.left=values.start*step1+"px";
+		selecte.style.width=(values.end-values.start)*step1+"px"
+		selecte.style.left=values.start*step1+"px"
 
 		change()
 	}
 
 	function change(){
-		if(timeout) clearTimeout(timeout);
-
-		timeout=setTimeout(function(){
-			if(onchangecallback&&typeof onchangecallback=="function"){
-				return onchangecallback(input.value);
-			}
-		},500)
+		if(onchangecallback&&typeof onchangecallback=="function"){
+			return onchangecallback(getvalue())
+		}
 	}
 
 	function disable(data){
@@ -4208,7 +4321,6 @@ function rangeslider(target=null,value=null,step=null,set=null,range=false,scale
 
 	function createElement(el,cls,dataAttr){
 		var element=document.createElement(el)
-		console.log(cls)
 		if(cls) element.className=cls
 		if(dataAttr&&dataAttr.length==2){
 			element.setAttribute("data-"+dataAttr[0],dataAttr[1])
@@ -4228,6 +4340,7 @@ function rangeslider(target=null,value=null,step=null,set=null,range=false,scale
 	if(input){
 		inputdisplay=getComputedStyle(input,null).display
 		input.style.display="none"
+		disabled=input.disabled
 		if((value instanceof Array)||(value["min"]!=undefined&&value["max"]!=undefined)){
 			// init END
 
@@ -4257,11 +4370,6 @@ function rangeslider(target=null,value=null,step=null,set=null,range=false,scale
 			slider.classList.add(style)
 
 			input.parentNode.insertBefore(slider,input.nextSibling)
-
-
-			if(width){
-				slider.style.width=parseInt(width)+"px"
-			}
 			sliderleft=slider.getBoundingClientRect().left
 			sliderwidth=slider.clientWidth
 			pointerwidth=pointerl.clientWidth
@@ -4322,6 +4430,14 @@ function rangeslider(target=null,value=null,step=null,set=null,range=false,scale
 					}
 				}else{
 					values.end=value.indexOf(set[0])
+				}
+			}
+
+			if(stylelist){
+				for(let i=0;i<stylelist.length;i=i+1){
+					for(let j=0;j<stylelist[i][1].length;j=j+1){
+						stylelist[i][0].style[stylelist[j][0]]=stylelist[j][1]
+					}
 				}
 			}
 
