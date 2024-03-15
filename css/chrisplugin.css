@@ -391,3 +391,95 @@ body[scroll]::-webkit-scrollbar-thumb{
 		}
 	}
 }
+
+/* carousel */
+.carousel{
+	position: relative;
+}
+
+.carousebutton{
+	border: none;
+	position: absolute;
+	background: none;
+	border-radius: 10px;
+	font-size: 25px;
+	cursor: pointer;
+	z-index: 100;
+
+	&:hover{
+		opacity: 0.75;
+	}
+}
+
+.carouseprev{
+	top: 0px;
+	left: 0px;
+	width: 30px;
+	height: 100%;
+}
+
+.carousenext{
+	top: 0px;
+	right: 0px;
+	width: 30px;
+	height: 100%;
+}
+
+.carouselfunction{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 200;
+}
+
+.carouseldot{
+	border: 1px var(--stgray-400) solid;
+	background: var(--stgray-200);
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	margin: 0px 10px;
+	cursor: pointer;
+	transition: 0.2 linear;
+
+	&:hover{
+		opacity: 0.75;
+	}
+}
+
+.carouselline{
+	border: 1px var(--stgray-400) solid;
+	background: var(--stgray-200);
+	width: 80px;
+	height: 10px;
+	margin: 0px 10px;
+	cursor: pointer;
+	transition: 0.2 linear;
+
+	&:hover{
+		opacity: 0.75;
+	}
+}
+
+.carouselimage{
+	border: 1px var(--stgray-100) solid;
+	background: none;
+	width: 80px;
+	height: 50px;
+	padding: 5px;
+	margin: 0px 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: 0.2 linear;
+
+	&:hover{
+		opacity: 0.75;
+	}
+}
