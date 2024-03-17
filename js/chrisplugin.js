@@ -4149,6 +4149,14 @@ function string(data){
 	}
 }
 
+function str(data){
+	if(typeof data=="object"){
+		return JSON.stringify(data)
+	}else{
+		return String(data)
+	}
+}
+
 function int(data){
 	return parseInt(data)
 }
@@ -4552,6 +4560,171 @@ function rangeslider(target=null,value=null,step=null,set=null,range=false,scale
 		}
 	}else{
 		throw "[DOMNOTFOUND_ERROR]function rangetslider error: target element not find"
+	}
+}
+
+// (語法: 輪播器的div id, 各圖選擇器, 是否有左右控制器, 是否有下方控制器(dot: 一個點點, line: 一條線, timeline: 依時間滾動, image: 圖片, none: 沒有), 更新時間(ms)(-1為不更新))
+function carousel(id,carouselimageclass=".carouseimage",leftrightcontroller=true,indexcontroller="dot",carouseltime=1500){
+	if(document.getElementById(id)){
+		if(typeof leftrightcontroller=="boolean"){
+			if(indexcontroller=="none"||indexcontroller=="dot"||indexcontroller=="line"||indexcontroller=="timeline"||indexcontroller=="image"){
+				let count=0
+				let index=0
+				let innerhtml=``
+				let totalindex=document.querySelectorAll(carouselimageclass).length
+
+				// change image
+				function change(){
+					// 將所有圖片隱藏
+					document.querySelectorAll(carouselimageclass).forEach(function(element){
+						element.style.display="none"
+					})
+
+					// 將index圖片顯示
+					if(document.querySelectorAll(carouselimageclass)[index]){
+						document.querySelectorAll(carouselimageclass)[index].style.display="block"
+					}
+
+
+					if(indexcontroller=="dot"){
+						document.querySelectorAll(".carouseldot").forEach(function(event){
+							event.style.background="var(--stgray-200)"
+						})
+						document.querySelectorAll(".carouseldot")[index].style.background="var(--stgray-500)"
+					}else if(indexcontroller=="line"){
+						document.querySelectorAll(".carouselline").forEach(function(event){
+							event.style.background="var(--stgray-200)"
+						})
+						document.querySelectorAll(".carouselline")[index].style.background="var(--stgray-500)"
+					}else if(indexcontroller=="timeline"){
+
+					}else if(indexcontroller=="image"){
+						document.querySelectorAll(".carouselimage").forEach(function(event){
+							event.style.background="none"
+						})
+						document.querySelectorAll(".carouselimage")[index].style.background="var(--stgray-200)"
+					}
+
+					count=0
+				}
+
+				if(leftrightcontroller){
+					innerhtml=`
+						${innerhtml}
+						<input type="button" class="carousebutton carouseprev" id="carouseprev" value="<">
+						<input type="button" class="carousebutton carousenext" id="carousenext" value=">">
+					`
+				}
+
+				if(indexcontroller!="none"){
+					let carouselfunction=``
+
+					if(indexcontroller=="dot"){
+						for(let i=0;i<totalindex;i=i+1){
+							carouselfunction=`
+								${carouselfunction}
+								<div class="carouseldot" data-id="${i}"></div>
+							`
+						}
+					}else if(indexcontroller=="line"){
+						for(let i=0;i<totalindex;i=i+1){
+							carouselfunction=`
+								${carouselfunction}
+								<div class="carouselline" data-id="${i}"></div>
+							`
+						}
+					}else if(indexcontroller=="timeline"){
+
+					}else if(indexcontroller=="image"){
+						for(let i=0;i<totalindex;i=i+1){
+							carouselfunction=`
+								${carouselfunction}
+								<div class="carouselimage" data-id="${i}">
+									<img src="${document.querySelectorAll(carouselimageclass)[i].src}" alt="image" class="image">
+								</div>
+							`
+						}
+					}else{
+						throw "function carousel error: indexcontroller parameter KEYTYPEIN error(must be none|timeline|dot|line|image), but wtf tell me how did you did this"
+					}
+
+
+					innerhtml=`
+						${innerhtml}
+						<div class="carouselfunction">
+							${carouselfunction}
+						</div>
+					`
+				}
+
+				document.getElementById(id).innerHTML=`
+					${document.getElementById(id).innerHTML}
+					${innerhtml}
+				`
+
+				if(document.getElementById("carouseprev")){
+					document.getElementById("carouseprev").onclick=function(){
+						count=0
+						if(index-1<0){
+							index=totalindex-1
+						}else{
+							index=(index-1)%totalindex
+						}
+						change()
+					}
+				}
+
+				if(document.getElementById("carousenext")){
+					document.getElementById("carousenext").onclick=function(){
+						count=0
+						index=(index+1)%totalindex
+						change()
+					}
+				}
+
+				if(indexcontroller=="dot"){
+					document.querySelectorAll(".carouseldot").forEach(function(event){
+						event.onclick=function(){
+							index=event.dataset.id
+							change()
+						}
+					})
+				}else if(indexcontroller=="line"){
+					document.querySelectorAll(".carouselline").forEach(function(event){
+						event.onclick=function(){
+							index=event.dataset.id
+							change()
+						}
+					})
+				}else if(indexcontroller=="timeline"){
+
+				}else if(indexcontroller=="image"){
+					document.querySelectorAll(".carouselimage").forEach(function(event){
+						event.onclick=function(){
+							index=event.dataset.id
+							change()
+						}
+					})
+				}
+
+				change()
+				if(-1<carouseltime){
+					setInterval(function(){
+						count=count+1
+						if(carouseltime/10<=count){
+							change()
+							index=(index+1)%totalindex
+						} // 換圖片
+					},10)
+				}
+			}else{
+				throw "[KEYTYPEIN ERROR]function carousel error: indexcontroller parameter KEYTYPEIN error(must be none|timeline|dot|line|image)"
+			}
+		}else{
+			throw "[KEYTYPEIN ERROR]function carousel error: leftrightcontroller is not boolean"
+		}
+	}else{
+		throw "[DOMNOTFOUND ERROR]function carousel error: dom id not found"
 	}
 }
 
