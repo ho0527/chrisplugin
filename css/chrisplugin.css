@@ -35,35 +35,35 @@
 ::-webkit-scrollbar-thumb:hover{
     border: 5px transparent solid;
     background-clip: content-box;
-    background: rgba(50, 50, 50, 0.3);
+    background: var(--stgray-400);
     border-radius: 1000px;
 }
 
 body[scroll]::-webkit-scrollbar-thumb{
     border: 5px transparent solid;
     background-clip: content-box;
-    background: rgba(50, 50, 50, 0.3);
+    background: var(--stgray-400);
     border-radius: 1000px;
 }
 
 .macossectiondiv[scroll]::-webkit-scrollbar-thumb{
     border: 5px transparent solid;
     background-clip: content-box;
-    background: rgba(50, 50, 50, 0.3);
+    background: var(--stgray-400);
     border-radius: 1000px;
 }
 
 .macossectiondivx[scroll]::-webkit-scrollbar-thumb{
     border: 5px transparent solid;
     background-clip: content-box;
-    background: rgba(50, 50, 50, 0.3);
+    background: var(--stgray-400);
     border-radius: 1000px;
 }
 
 .macossectiondivy[scroll]::-webkit-scrollbar-thumb{
     border: 5px transparent solid;
     background-clip: content-box;
-    background: rgba(50, 50, 50, 0.3);
+    background: var(--stgray-400);
     border-radius: 1000px;
 }
 
@@ -90,6 +90,7 @@ body[scroll]::-webkit-scrollbar-thumb{
     transform: translate(-50%, -50%);
     background: rgb(175, 175, 175);
     color: black;
+	border-radius: 10px;
     font-size: 20px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
