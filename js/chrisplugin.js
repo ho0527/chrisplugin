@@ -698,9 +698,6 @@ function signin(
 function smoothscroll(id){
 	if(document.getElementById(id)){
 		document.getElementById(id).scrollIntoView({ behavior: "smooth" })
-		setTimeout(function(){
-			history.pushState(null,null,"#"+id)
-		},50)
 	}else{
 		conlog("[ERROR]function smoothscroll id not found","red","12")
 	}
