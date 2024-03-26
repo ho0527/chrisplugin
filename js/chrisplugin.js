@@ -1251,9 +1251,19 @@ function onchange(element,callback=function(){}){
 
 // onclick
 function click(element){
-	domgetall(element).forEach(function(event){
-		event.click()
-	})
+	if(typeof element=="object"){
+		if(element.length){
+			element.forEach(function(event){
+				event.click()
+			})
+		}else{
+			element.click()
+		}
+	}else{
+		domgetall(element).forEach(function(event){
+			event.click()
+		})
+	}
 }
 
 function onclick(element,callback=function(){}){
