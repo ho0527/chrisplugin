@@ -283,12 +283,8 @@ function ajax(method,url,onloadcallback,send=null,header=[["Content-type","multi
 			}
 		}
 
-		xmlhttprequest.upload.onprogress=function(event){
-			if(event.lengthComputable){
-				progresscallback(event,(event.loaded/event.total)*100)
-			}else{
-				console.warn("[EXP_UPLOADDATA WARNING]function ajax warn: onprogress can't be progress")
-			}
+		xmlhttprequest.onprogress=function(event){
+			progresscallback(event,(event.loaded/event.total)*100)
 		}
 
 		for(let i=0;i<callback.length;i=i+1){
@@ -4170,6 +4166,14 @@ function int(data){
 
 function float(data){
 	return parseFloat(data)
+}
+
+function min(data=[]){
+	return Math.min(data)
+}
+
+function max(data=[]){
+	return Math.max(data)
 }
 
 // testing
