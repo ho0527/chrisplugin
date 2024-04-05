@@ -363,6 +363,8 @@ function newajax(method,url,onloadcallback,send=null,header=[["Content-type","mu
 }
 
 function lightbox(clickelement,element,lightboxhtml,closelement=null,islightboxclosewithkeyesc=true,clickcolse="mask"){
+	let click=false
+
 	docgetid(element).classList.add("lightboxmask")
 
 	if(!isset(clickelement)){
@@ -410,7 +412,7 @@ function lightbox(clickelement,element,lightboxhtml,closelement=null,islightboxc
 	}
 
 	if(islightboxclosewithkeyesc){
-		document.addEventListener("keydown",function(event){
+		document.onkeydown=function(event){
 			if(event.key=="Escape"){
 				event.preventDefault()
 				docgetid(element).style.transform="translateY(-100%)"
@@ -418,7 +420,7 @@ function lightbox(clickelement,element,lightboxhtml,closelement=null,islightboxc
 					docgetid(element).innerHTML=``
 				},300)
 			}
-		})
+		}
 	}
 
 	if(clickcolse=="body"){
@@ -429,12 +431,23 @@ function lightbox(clickelement,element,lightboxhtml,closelement=null,islightboxc
 			},300)
 		}
 	}else if(clickcolse=="mask"){
-		docgetid(element).onclick=function(event){
+		docgetid(element).onmousedown=function(event){
 			if(event.target==docgetid(element)){
-				docgetid(element).style.transform="translateY(-100%)"
-				setTimeout(function(){
-					docgetid(element).innerHTML=``
-				},300)
+				click=true
+			}
+		}
+		docgetid(element).onmouseup=function(event){
+			if(click){
+				if(event.target==docgetid(element)){
+					docgetid(element).style.transform="translateY(-100%)"
+					setTimeout(function(){
+						docgetid(element).innerHTML=``
+					},300)
+				}else{
+					click=false
+				}
+			}else{
+				click=false
 			}
 		}
 	}else if(clickcolse=="none"){
