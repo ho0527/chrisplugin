@@ -4024,8 +4024,19 @@ function href(url){
 	}
 }
 
-function dataset(element,key){
-	return element.dataset[key]
+function dataset(element,key,value=null){
+	if(element){
+		if(value!=null){
+			element.dataset[key]=value
+			return element.dataset[key]
+		}else if(element.dataset[key]){
+			return element.dataset[key]
+		}else{
+			throw "[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset"
+		}
+	}else{
+		throw "[DOMNOTFOUND_ERROR]function dataset can't find given element"
+	}
 }
 
 function getfile(){
@@ -4181,12 +4192,12 @@ function float(data){
 	return parseFloat(data)
 }
 
-function min(data=[]){
-	return Math.min(data)
+function min(...data){
+	return Math.min(...data)
 }
 
-function max(data=[]){
-	return Math.max(data)
+function max(...data){
+	return Math.max(...data)
 }
 
 // testing
