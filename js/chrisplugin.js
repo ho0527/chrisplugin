@@ -3933,6 +3933,54 @@ function innerhtml(element,text,keep=true){
 	}
 }
 
+function innertext(element,text,keep=true){
+	if(typeof element=="object"){
+		if(element.length){
+			data=[]
+
+			element.forEach(function(event){
+				if(keep){
+					event.innerText=`
+						${event.innerText}
+						${text}
+					`
+				}else{
+					event.innerText=text
+				}
+				data.push(event.innerText)
+			})
+
+			return data
+		}else{
+			if(keep){
+				element.innerText=`
+					${element.innerText}
+					${text}
+				`
+			}else{
+				element.innerText=text
+			}
+			return element.innerText
+		}
+	}else{
+		data=[]
+
+		domgetall(element,function(event){
+			if(keep){
+				event.innerText=`
+					${event.innerText}
+					${text}
+				`
+			}else{
+				event.innerText=text
+			}
+			data.push(event.innerText)
+		})
+
+		return data
+	}
+}
+
 function value(element,text,keep=false){
 	if(typeof element=="object"){
 		if(element.length){
