@@ -44,6 +44,15 @@ function startmacossection(){
 				docget("qtor","body").removeAttribute("scroll")
 			},500)
 		}
+		domgetall("textarea").forEach(function(event){
+			event.onscroll=function(){
+				clearTimeout(macostimer)
+				event.parentNode.setAttribute("scroll","true")
+				macostimer=setTimeout(function(){
+					event.parentNode.removeAttribute("scroll")
+				},500)
+			}
+		})
 		document.querySelectorAll(".macossectiondiv").forEach(function(event){
 			event.addEventListener("scroll",function(){
 				clearTimeout(macostimer)
@@ -232,7 +241,7 @@ function oldajax(method,url,send=null,header=[["Content-type","multipart/form-da
 	return xmlrequest
 }
 
-function ajax(method,url,onloadcallback,send=null,header=[["Content-type","multipart/form-data"]],progresscallback=function(event){},statechange=[function(){},function(){},function(){},function(){}],callback=[]){
+function ajax(method,url,onloadcallback,send=null,header=[["Content-type","multipart/form-data"]],progresscallback=function(processevent,percentage){},statechange=[function(){},function(){},function(){},function(){}],callback=[]){
 	let check=true
 	if(method==null){
 		conlog("function ajax method requset","red","12")

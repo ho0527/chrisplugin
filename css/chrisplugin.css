@@ -46,6 +46,13 @@ body[scroll]::-webkit-scrollbar-thumb{
     border-radius: 1000px;
 }
 
+.input:has(>textarea)[scroll]::-webkit-scrollbar-thumb{
+    border: 5px transparent solid;
+    background-clip: content-box;
+    background: var(--stgray-400);
+    border-radius: 1000px;
+}
+
 .macossectiondiv[scroll]::-webkit-scrollbar-thumb{
     border: 5px transparent solid;
     background-clip: content-box;
