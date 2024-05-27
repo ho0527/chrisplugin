@@ -4820,6 +4820,34 @@ function carousel(id,carouselimageclass=".carouseimage",leftrightcontroller=true
 	}
 }
 
+function dompush(element,dom="div",data=``,setting={}){
+	document.querySelectorAll(element).forEach(function(event){
+		let createelement=document.createElement(dom)
+		createelement.innerHTML=data
+		if(setting["id"])
+			createelement.id=setting["id"]
+		if(setting["class"])
+			createelement.classList=setting["class"]
+		if(setting["style"])
+			createelement.style=setting["style"]
+		if(setting["src"])
+			createelement.src=setting["src"]
+		if(setting["alt"])
+			createelement.alt=setting["alt"]
+		if(setting["title"])
+			createelement.title=setting["title"]
+		for(let i=0;i<setting["dataset"]?setting["dataset"].length:0;i=i+1)
+			createelement.dataset.Object.keys(setting["dataset"][i])=setting["dataset"][i]
+		createelement.disabled=setting["disabled"]??false
+		createelement.max=setting["max"]??MAXINT
+		createelement.min=setting["min"]??MININT
+		createelement.multiple=setting["multiple"]??false
+		createelement.readonly=setting["readonly"]??false
+		createelement.step=setting["step"]??0
+		event.appendChild(createelement)
+	})
+}
+
 // window onload START
 windowload(function(event){
 	// 刷新lightbox
