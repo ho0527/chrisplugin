@@ -4848,8 +4848,6 @@ function dompush(element,dom="div",data=``,setting={}){
 	})
 }
 
-<<<<<<< Updated upstream
-=======
 function innerhtmlreverse(dom){
 	let element=Array.from(dom.children)
 	dom.innerHTML=``
@@ -4858,7 +4856,6 @@ function innerhtmlreverse(dom){
 	)
 }
 
->>>>>>> Stashed changes
 // window onload START
 windowload(function(event){
 	// 刷新lightbox
