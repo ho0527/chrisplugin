@@ -86,11 +86,13 @@ function startmacossection(){
 function divsort(card,sortdiv,callback=function(){}){
 	document.querySelectorAll("."+card).forEach(function(event){
 		event.draggable="true"
+		event.style.cursor="grab"
 	})
 
 	document.querySelectorAll(sortdiv).forEach(function(event){
 		event.ondragstart=function(addeventlistenerevent){
 			addeventlistenerevent.target.classList.add("divsortdragging")
+			event.style.cursor="grabbing"
 		}
 
 		event.ondragover=function(addeventlistenerevent){
@@ -122,6 +124,7 @@ function divsort(card,sortdiv,callback=function(){}){
 
 		event.ondragend=function(addeventlistenerevent){
 			addeventlistenerevent.target.classList.remove("divsortdragging")
+			event.style.cursor="grab"
 			callback()
 		}
 	})
