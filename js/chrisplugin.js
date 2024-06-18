@@ -91,33 +91,39 @@ function divsort(card,sortdiv,callback=function(){}){
 
 	document.querySelectorAll(sortdiv).forEach(function(event){
 		event.ondragstart=function(addeventlistenerevent){
-			addeventlistenerevent.target.classList.add("divsortdragging")
-			event.style.cursor="grabbing"
+            if(!event.querySelector("input:focus,textarea:focus,select:focus")){
+				addeventlistenerevent.target.classList.add("divsortdragging")
+				event.style.cursor="grabbing"
+            }else{
+                addeventlistenerevent.preventDefault()
+            }
 		}
 
 		event.ondragover=function(addeventlistenerevent){
 			addeventlistenerevent.preventDefault()
-			let sortableContainer=addeventlistenerevent.target.closest(sortdiv)
-			if(sortableContainer){
-				let draggableElements=Array.from(sortableContainer.children).filter(function(child){
-					return child.classList.contains(card)&&!child.classList.contains("divsortdragging")
-				})
+			let sortablecontainer=addeventlistenerevent.target.closest(sortdiv)
+			if(addeventlistenerevent.target.closest(sortdiv)){
+				if(!event.querySelector("input:focus,textarea:focus,select:focus")){
+					let draggableelement=Array.from(sortablecontainer.children).filter(function(child){
+						return child.classList.contains(card)&&!child.classList.contains("divsortdragging")
+					})
 
-				let afterElement=draggableElements.reduce(function(closest,child){
-					let box=child.getBoundingClientRect()
-					let offset=addeventlistenerevent.clientY-box.top-box.height/2
-					if(offset<0&&offset>closest.offset){
-						return { offset:offset,element:child }
+					let afterelement=draggableelement.reduce(function(closest,child){
+						let box=child.getBoundingClientRect()
+						let offset=addeventlistenerevent.clientY-box.top-box.height/2
+						if(offset<0&&offset>closest.offset){
+							return { offset:offset,element:child }
+						}else{
+							return closest
+						}
+					},{ offset:Number.NEGATIVE_INFINITY }).element
+
+					let draggable=document.querySelector(".divsortdragging")
+					if(afterelement==null){
+						sortablecontainer.appendChild(draggable)
 					}else{
-						return closest
+						sortablecontainer.insertBefore(draggable,afterelement)
 					}
-				},{ offset:Number.NEGATIVE_INFINITY }).element
-
-				let draggable=document.querySelector(".divsortdragging")
-				if(afterElement==null){
-					sortableContainer.appendChild(draggable)
-				}else{
-					sortableContainer.insertBefore(draggable,afterElement)
 				}
 			}
 		}
@@ -128,7 +134,6 @@ function divsort(card,sortdiv,callback=function(){}){
 			callback()
 		}
 	})
-
 }
 
 function docget(key,selector){
@@ -230,11 +235,15 @@ function weblsset(data,value){
 	}
 }
 
-function weblsget(data){
-	try{
-		let data=JSON.parse(localStorage.getItem(data))
-		return data
-	}catch(error){
+function weblsget(data,tojson=true){
+	if(tojson==true){
+		try{
+			let data=JSON.parse(localStorage.getItem(data))
+			return data
+		}catch(error){
+			return localStorage.getItem(data)
+		}
+	}else{
 		return localStorage.getItem(data)
 	}
 }
