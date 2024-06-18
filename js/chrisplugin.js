@@ -100,10 +100,10 @@ function divsort(card,sortdiv,callback=function(){}){
 		}
 
 		event.ondragover=function(addeventlistenerevent){
-			addeventlistenerevent.preventDefault()
-			let sortablecontainer=addeventlistenerevent.target.closest(sortdiv)
-			if(addeventlistenerevent.target.closest(sortdiv)){
-				if(!event.querySelector("input:focus,textarea:focus,select:focus")){
+			if(!event.querySelector("input:focus,textarea:focus,select:focus")){
+				addeventlistenerevent.preventDefault()
+				let sortablecontainer=addeventlistenerevent.target.closest(sortdiv)
+				if(sortablecontainer){
 					let draggableelement=Array.from(sortablecontainer.children).filter(function(child){
 						return child.classList.contains(card)&&!child.classList.contains("divsortdragging")
 					})
