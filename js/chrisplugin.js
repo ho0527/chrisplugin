@@ -222,12 +222,21 @@ function weblsset(data,value){
 	if(value==null){
 		return localStorage.removeItem(data)
 	}else{
-		return localStorage.setItem(data,value)
+		if(typeof value=="object"||typeof value=="array"){
+			return localStorage.setItem(data,JSON.stringify(value))
+		}else{
+			return localStorage.setItem(data,value)
+		}
 	}
 }
 
 function weblsget(data){
-	return localStorage.getItem(data)
+	try{
+		let data=JSON.parse(localStorage.getItem(data))
+		return data
+	}catch(error){
+		return localStorage.getItem(data)
+	}
 }
 
 function doccreate(element){
