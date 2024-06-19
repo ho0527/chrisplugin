@@ -86,7 +86,7 @@ body[scroll]::-webkit-scrollbar-thumb{
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
     transform: translateY(-100%);
-    z-index: 999;
+    z-index: 9999;
     transition: transform 0.3s ease-in-out;
 }
 
@@ -96,7 +96,7 @@ body[scroll]::-webkit-scrollbar-thumb{
     left: 50%;
     transform: translate(-50%, -50%);
     background: rgb(175, 175, 175);
-    color: black;
+	color: black;
 	border-radius: 10px;
     font-size: 20px;
     padding: 20px;
