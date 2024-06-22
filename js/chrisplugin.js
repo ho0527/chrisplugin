@@ -924,6 +924,36 @@ function on(key,element,callback=function(){}){
 	}
 }
 
+function onenterclick(element,callback=function(){}){
+	if(typeof element=="object"){
+		if(element.length){
+			element.forEach(function(event){
+				event.onkeydown=function(event2){
+					if(event2.key=="Enter")
+						callback()
+				}
+			})
+		}else{
+			element.onkeydown=function(event2){
+				if(event2.key=="Enter")
+					callback()
+			}
+		}
+	}else{
+		domgetall(element,function(event){
+			event.onkeydown=function(event2){
+				if(event2.key=="Enter")
+					callback()
+			}
+		})
+
+	}
+	return {
+		"success": true,
+		"data": ""
+	}
+}
+
 // onabort
 function abort(element,callback=function(){}){
 	domgetall(element).forEach(function(event){
