@@ -164,7 +164,7 @@ function docget(key,selector){
 	conlog("[ERROR]dget key not found"+key)
 }
 
-function domgetid(selector){
+function docgetid(selector){
 	return document.getElementById(selector)
 }
 
