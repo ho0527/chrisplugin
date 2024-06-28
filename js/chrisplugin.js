@@ -6,7 +6,7 @@
 	2023/06/28  20:10:16 Bata 1.0.0 // 新增macosselection 以及 sort 以及 dget 以及 clog函式
 	2023/06/30  14:35:45 Bata 1.0.1 // 新增isset函式
 	2023/07/01  12:52:01 Bata 1.0.2 // 修改變數及小問題
-	2023/07/01  12:56:24 Bata 1.0.3 // 新增docgetid 及 docgetall 及 weblsset 及 weblsget函式
+	2023/07/01  12:56:24 Bata 1.0.3 // 新增domgetid 及 docgetall 及 weblsset 及 weblsget函式
 	2023/07/02  23:39:12 Bata 1.0.4 // 新增doccreate函式
 	2023/07/09  21:54:50 Bata 1.0.5 // 新增ajax函式
 	2023/07/12  13:51:52 Bata 1.0.6 // 新增lightbox函式
@@ -164,7 +164,7 @@ function docget(key,selector){
 	conlog("[ERROR]dget key not found"+key)
 }
 
-function docgetid(selector){
+function domgetid(selector){
 	return document.getElementById(selector)
 }
 
@@ -395,12 +395,12 @@ function newajax(method,url,onloadcallback,send=null,header=[["Content-type","mu
 function lightbox(clickelement,element,lightboxhtml,closelement=null,islightboxclosewithkeyesc=true,clickcolse="mask"){
 	let click=false
 
-	docgetid(element).classList.add("lightboxmask")
+	domgetid(element).classList.add("lightboxmask")
 
 	if(!isset(clickelement)){
-		docgetid(element).innerHTML=``
+		domgetid(element).innerHTML=``
 		setTimeout(function(){
-			docgetid(element).style.transform="translateY(0)"
+			domgetid(element).style.transform="translateY(0)"
 		},300)
 		docgetid(element).innerHTML=`
 			<div class="lightboxmain macossectiondiv">
@@ -888,7 +888,8 @@ function tag(tagdiv,taglist,newtag=function(){}){
 	divsort("tag","#selecttag")
 }
 
-function passwordshowhide(url="/website/",id="passwordicon"){
+// --- 自用函式 ---
+function passwordshowhide(url="/",id="passwordicon"){
 	if(docgetid(id)){
 		if(weblsget("passwordshow")=="true"){
 			docgetid(id).src=url+"material/icon/eyeopen.svg"
@@ -904,14 +905,14 @@ function passwordshowhide(url="/website/",id="passwordicon"){
 				docgetid("password").type="password"
 				weblsset("passwordshow","false")
 			}else{
-				docgetid(id).src=url+"material/icon/eyeopen.svg"
-				docgetid("password").type="text"
+				domgetid(id).src=url+"material/icon/eyeopen.svg"
+				domgetid("password").type="text"
 				weblsset("passwordshow","true")
 			}
 		}
 	}
-
 }
+// --- 自用函式 ---
 
 // on* event START
 function on(key,element,callback=function(){}){
