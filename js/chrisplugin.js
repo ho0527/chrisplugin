@@ -34,6 +34,9 @@
 	|-------    -----    -     -    -          -     -----         -----  -------|
 */
 
+const MAXINT=9999999999
+const MININT=-9999999999
+
 function startmacossection(){
 	let macostimer
 	setInterval(function(){
@@ -4875,6 +4878,7 @@ function carousel(id,carouselimageclass=".carouseimage",leftrightcontroller=true
 function dompush(element,dom="div",data=``,setting={}){
 	document.querySelectorAll(element).forEach(function(event){
 		let createelement=document.createElement(dom)
+		let dataset=setting["dataset"]?setting["dataset"]:{}
 		createelement.innerHTML=data
 		if(setting["id"])
 			createelement.id=setting["id"]
@@ -4888,8 +4892,11 @@ function dompush(element,dom="div",data=``,setting={}){
 			createelement.alt=setting["alt"]
 		if(setting["title"])
 			createelement.title=setting["title"]
-		for(let i=0;i<setting["dataset"]?setting["dataset"].length:0;i=i+1)
-			createelement.dataset.Object.keys(setting["dataset"][i])=setting["dataset"][i]
+		for(let key in dataset){
+			if(dataset.hasOwnProperty(key)){
+				createelement.dataset[key]=dataset[key]
+			}
+		}
 		createelement.disabled=setting["disabled"]??false
 		createelement.max=setting["max"]??MAXINT
 		createelement.min=setting["min"]??MININT
