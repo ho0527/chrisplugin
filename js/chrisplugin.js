@@ -1339,10 +1339,20 @@ function click(element){
 	}
 }
 
-function onclick(element,callback=function(){}){
-	domgetall(element).forEach(function(event){
-		event.onclick=function(onevent){ callback(event,onevent) }
-	})
+function onclick(element,callback=function(){},samecheck=false){
+	if(samecheck){
+		domgetall(element).forEach(function(event){
+			event.onclick=function(onevent){
+				if(event.target==event){
+					callback(event,onevent)
+				}
+			}
+		})
+	}else{
+		domgetall(element).forEach(function(event){
+			event.onclick=function(onevent){ callback(event,onevent) }
+		})
+	}
 }
 
 // onclose
