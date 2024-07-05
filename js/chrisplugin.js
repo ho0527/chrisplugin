@@ -1343,7 +1343,7 @@ function onclick(element,callback=function(){},samecheck=false){
 	if(samecheck){
 		domgetall(element).forEach(function(event){
 			event.onclick=function(onevent){
-				if(event.target==event){
+				if(onevent.target==event){
 					callback(event,onevent)
 				}
 			}
