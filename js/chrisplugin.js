@@ -1342,7 +1342,6 @@ function click(element){
 function onclick(element,callback=function(){},samecheck=false){
 	if(samecheck){
 		domgetall(element).forEach(function(event){
-			event.style.cursor="pointer"
 			event.onclick=function(onevent){
 				if(onevent.target==event){
 					callback(event,onevent)
