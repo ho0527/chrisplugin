@@ -4973,17 +4973,21 @@ function chash(x,type="encode",encoding="utf-8"){
 
 		return result
 	}else if(type=="decode"){
-		let [a,l,y,k]=x.split("|")
+		try{
+			let [a,l,y,k]=x.split("|")
 
-		let decoder=new TextDecoder(encoding)
-		let shuffledt=new Uint8Array(atob(l).split("").map(char => char.charCodeAt(0)))
-		let kbuf=new Uint8Array(atob(k).split("").map(char => char.charCodeAt(0)))
+			let decoder=new TextDecoder(encoding)
+			let shuffledt=new Uint8Array(atob(l).split("").map(char => char.charCodeAt(0)))
+			let kbuf=new Uint8Array(atob(k).split("").map(char => char.charCodeAt(0)))
 
-		let t=xorbufs(shuffledt,kbuf)
+			let t=xorbufs(shuffledt,kbuf)
 
-		let originalstring=decoder.decode(t)
+			let originalstring=decoder.decode(t)
 
-		return originalstring
+			return originalstring
+		}catch(error){
+			console.error("[CHECKCODE_ERROR]function chash error: check code error")
+		}
 	}else{
 		console.error("[KEYTYPEIN_ERROR]function chash error: type must be \"encode\" or \"decode\"")
 	}
