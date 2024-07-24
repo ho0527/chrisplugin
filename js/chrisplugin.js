@@ -4926,6 +4926,69 @@ function innerhtmlreverse(dom){
 	)
 }
 
+function chash(x,type="encode",encoding="utf-8"){
+    function generaterandomstring(length){
+        let chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+        let result=""
+        for(let i=0;i<length;i=i+1){
+            let randomindex=Math.floor(Math.random() * chars.length)
+            result=result+chars[randomindex]
+        }
+        return result
+    }
+
+    function shufflestring(str){
+        let arr=str.split("")
+        for(let i=arr.length-1;i>0;i--){
+            let j=Math.floor(Math.random() * (i + 1))
+            let temp=arr[i]
+            arr[i]=arr[j]
+            arr[j]=temp
+        }
+        return arr.join("")
+    }
+
+    function xorbufs(buf1,buf2){
+        let result=new Uint8Array(buf1.length)
+        for (let i=0;i<buf1.length;i++){
+            result[i]=buf1[i]^buf2[i % buf2.length]
+        }
+        return result
+    }
+
+	if(type=="encode"){
+		let encoder=new TextEncoder()
+		let t=encoder.encode(str(x))
+
+		let k=encoder.encode(generaterandomstring(40))
+
+		let shuffledt=xorbufs(t,k)
+		let l=btoa(String.fromCharCode.apply(null,shuffledt))
+
+		let a=shufflestring(`chash${encoding}`.padEnd(20,"a"))
+		let y=generaterandomstring(10)
+		let kencoded=btoa(String.fromCharCode.apply(null,k))
+
+		let result=`${a}|${l}|${y}|${kencoded}`
+
+		return result
+	}else if(type=="decode"){
+		let [a,l,y,k]=x.split("|")
+
+		let decoder=new TextDecoder(encoding)
+		let shuffledt=new Uint8Array(atob(l).split("").map(char => char.charCodeAt(0)))
+		let kbuf=new Uint8Array(atob(k).split("").map(char => char.charCodeAt(0)))
+
+		let t=xorbufs(shuffledt,kbuf)
+
+		let originalstring=decoder.decode(t)
+
+		return originalstring
+	}else{
+		console.error("[KEYTYPEIN_ERROR]function chash error: type must be \"encode\" or \"decode\"")
+	}
+}
+
 // window onload START
 windowload(function(event){
 	// 刷新lightbox
