@@ -958,6 +958,36 @@ function onenterclick(element,callback=function(){}){
 	}
 }
 
+function onenterkeydown(element,callback=function(){}){
+	if(typeof element=="object"){
+		if(element.length){
+			element.forEach(function(event){
+				event.onkeydown=function(event2){
+					if(event2.key=="Enter")
+						callback()
+				}
+			})
+		}else{
+			element.onkeydown=function(event2){
+				if(event2.key=="Enter")
+					callback()
+			}
+		}
+	}else{
+		domgetall(element,function(event){
+			event.onkeydown=function(event2){
+				if(event2.key=="Enter")
+					callback()
+			}
+		})
+
+	}
+	return {
+		"success": true,
+		"data": ""
+	}
+}
+
 // onabort
 function abort(element,callback=function(){}){
 	domgetall(element).forEach(function(event){
@@ -4931,7 +4961,7 @@ function chash(x,type="encode",encoding="utf-8"){
         let chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
         let result=""
         for(let i=0;i<length;i=i+1){
-            let randomindex=Math.floor(Math.random() * chars.length)
+            let randomindex=Math.floor(Math.random()*chars.length)
             result=result+chars[randomindex]
         }
         return result
@@ -4940,7 +4970,7 @@ function chash(x,type="encode",encoding="utf-8"){
     function shufflestring(str){
         let arr=str.split("")
         for(let i=arr.length-1;i>0;i--){
-            let j=Math.floor(Math.random() * (i + 1))
+            let j=Math.floor(Math.random()*(i+1))
             let temp=arr[i]
             arr[i]=arr[j]
             arr[j]=temp
