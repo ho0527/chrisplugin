@@ -491,3 +491,41 @@ body[scroll]::-webkit-scrollbar-thumb{
 		opacity: 0.75;
 	}
 }
+
+.codebeautifier {
+	font-family: "consolas";
+	background: rgb(40, 44, 52);
+	color: rgb(189, 194, 202);
+	padding: 15px;
+	border-radius: 10px;
+	line-height: 1.25;
+	overflow-x: auto;
+}
+
+.codebeautifier .linenumber {
+	display: inline-block;
+	width: 2em;
+	user-select: none;
+	opacity: 0.5;
+}
+
+.codebeautifier .keyword {
+	color: rgb(220,133,43);
+}
+
+.codebeautifier .string {
+	color: rgb(131,214,255);
+}
+
+.codebeautifier .number {
+	color: rgb(58,164,248);
+}
+
+.codebeautifier .comment {
+	color: rgb(92, 99, 112);
+	font-style: italic;
+}
+
+.code-beautifier .function{
+	color: rgb(188,151,229);
+}

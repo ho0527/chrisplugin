@@ -115,7 +115,7 @@ function divsort(card,sortdiv,callback=function(){}){
 						let box=child.getBoundingClientRect()
 						let offset=addeventlistenerevent.clientY-box.top-box.height/2
 						if(offset<0&&offset>closest.offset){
-							return { offset:offset,element:child }
+							return{ offset:offset,element:child }
 						}else{
 							return closest
 						}
@@ -952,7 +952,7 @@ function onenterclick(element,callback=function(){}){
 		})
 
 	}
-	return {
+	return{
 		"success": true,
 		"data": ""
 	}
@@ -982,7 +982,7 @@ function onenterkeydown(element,callback=function(){}){
 		})
 
 	}
-	return {
+	return{
 		"success": true,
 		"data": ""
 	}
@@ -4751,7 +4751,7 @@ function rangeslider(target=null,value=null,step=null,set=null,range=false,scale
 	}
 }
 
-// (語法: 輪播器的div id, 各圖選擇器, 是否有左右控制器, 是否有下方控制器(dot: 一個點點, line: 一條線, timeline: 依時間滾動, image: 圖片, none: 沒有), 更新時間(ms)(-1為不更新))
+// (語法: 輪播器的div id,各圖選擇器,是否有左右控制器,是否有下方控制器(dot: 一個點點,line: 一條線,timeline: 依時間滾動,image: 圖片,none: 沒有),更新時間(ms)(-1為不更新))
 function carousel(id,carouselimageclass=".carouseimage",leftrightcontroller=true,indexcontroller="dot",carouseltime=1500){
 	if(document.getElementById(id)){
 		if(typeof leftrightcontroller=="boolean"){
@@ -4833,7 +4833,7 @@ function carousel(id,carouselimageclass=".carouseimage",leftrightcontroller=true
 							`
 						}
 					}else{
-						throw "function carousel error: indexcontroller parameter KEYTYPEIN error(must be none|timeline|dot|line|image), but wtf tell me how did you did this"
+						throw "function carousel error: indexcontroller parameter KEYTYPEIN error(must be none|timeline|dot|line|image),but wtf tell me how did you did this"
 					}
 
 
@@ -5021,6 +5021,63 @@ function chash(x,type="encode",encoding="utf-8"){
 	}else{
 		console.error("[KEYTYPEIN_ERROR]function chash error: type must be \"encode\" or \"decode\"")
 	}
+}
+
+function codebeautifier(code,language){
+    // 定義不同語言的關鍵字
+    let keyword={
+        "javascript": ["function","return","if","else","for","while","var","let","let","document","console"],
+        "js": ["function","return","if","else","for","while","var","let","let"],
+        "python": ["def","return","if","elif","else","for","while","import","from","as"],
+        "py": ["def","return","if","elif","else","for","while","import","from","as"],
+        "html": ["html","head","body","div","span","p","a","img","script","style"]
+        // 可以繼續添加其他語言
+    }[language]||[]
+    let line=""
+	let numbercode=""
+
+    // 使用一個helper函數來處理所有的語法高亮
+    function highlight(text,classname){
+        return `<span class="${classname}">${text}</span>`
+    }
+
+    // 首先轉義所有HTML特殊字符
+    code=code.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+
+    // 使用正則表達式一次性處理所有語法元素
+	if(["javascript","js","python","py"].includes(language)){
+		code=code.replace(
+			new RegExp(`\\b(${keyword.join("|")})\\b|(".*?"|'.*?')|(//.*$)|(?:function\\s+(\\w+)\\s*\\(|(?:const|let|var)\\s+(\\w+)\\s*=\\s*(?:function\\s*\\(|\\([^)]*\\)\\s*=>))`,"gm"),
+			function(match,keyword,string,comment,functionname1,functionname2){
+				if(keyword){ return highlight(keyword,"keyword") }
+				if(string){ return highlight(string,"string") }
+				if(comment){ return highlight(comment,"comment") }
+				if (functionname1||functionname2){
+					return match.replace(functionname1||functionname2,highlight(functionname1||functionname2,"function"))
+				}
+				return match
+			}
+		)
+	}else{
+		code=code.replace(
+			new RegExp(`\\b(${keyword.join("|")})\\b|(".*?"|'.*?')|(//.*$)`,"gm"),
+			function(match,keyword,string,comment){
+				if(keyword){ return highlight(keyword,"keyword") }
+				if(string){ return highlight(string,"string") }
+				if(comment){ return highlight(comment,"comment") }
+				return match
+			}
+		)
+	}
+
+    // 添加行號
+    line=code.split('\n');
+    numbercode=line.map(function(line,index){
+        return `<span class="linenumber">${index+1}</span>${line}`
+    }).join('\n')
+
+    // 生成最終的 HTML 結構
+    return `<pre class="codebeautifier ${language}"><code>${numbercode}</code></pre>`
 }
 
 // window onload START
