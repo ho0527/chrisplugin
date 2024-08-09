@@ -835,7 +835,7 @@ function tag(tagdiv,taglist,newtag=function(){}){
 		}
 	}
 
-	docgetid("tagdiv").classList.add("tagdiv")
+	docgetid(tagdiv).classList.add("tagdiv")
 
 	docgetid(tagdiv).innerHTML=`
 		<div class="tagcontrol">
