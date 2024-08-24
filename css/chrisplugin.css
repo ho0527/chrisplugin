@@ -494,7 +494,7 @@ body[scroll]::-webkit-scrollbar-thumb{
 
 .codebeautifier {
 	font-family: "consolas";
-	background: rgb(40, 44, 52);
+	background: rgb(24, 25, 26);
 	color: rgb(189, 194, 202);
 	padding: 15px;
 	border-radius: 10px;
@@ -503,8 +503,9 @@ body[scroll]::-webkit-scrollbar-thumb{
 }
 
 .codebeautifier .linenumber {
-	display: inline-block;
 	width: 2em;
+	text-align: right;
+	display: inline-block;
 	user-select: none;
 	opacity: 0.5;
 }
