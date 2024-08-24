@@ -505,6 +505,7 @@ body[scroll]::-webkit-scrollbar-thumb{
 .codebeautifier .linenumber {
 	width: 2em;
 	text-align: right;
+	margin: 0px 5px 0px 0px;
 	display: inline-block;
 	user-select: none;
 	opacity: 0.5;
