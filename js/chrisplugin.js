@@ -4367,6 +4367,11 @@ async function importhtml(element,url){
 
 	domgetall(element).forEach(function(event){
 		event.innerHTML=text
+		event.querySelectorAll("script").forEach(function(script){
+			let newscript=document.createElement("script")
+			newscript.textContent=script.textContent
+			event.appendChild(newscript)
+		})
 	})
 }
 
