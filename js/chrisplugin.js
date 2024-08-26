@@ -4353,6 +4353,14 @@ function max(...data){
 	return Math.max(...data)
 }
 
+function prevpage(){
+	history.back()
+}
+
+function nextpage(){
+	history.forward()
+}
+
 // testing
 function rangeslider(target=null,value=null,step=null,set=null,range=false,scale=true,labels=true,tooltip=true,style="roundstyle",lebel="",onchangecallback=null,stylelist=null){
 	let input
