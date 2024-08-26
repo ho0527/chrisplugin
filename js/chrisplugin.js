@@ -4361,6 +4361,15 @@ function nextpage(){
 	history.forward()
 }
 
+async function importhtml(element,url){
+	let data=await fetch(url)
+	let text=await data.text()
+
+	domgetall(element).forEach(function(event){
+		event.innerHTML=text
+	})
+}
+
 // testing
 function rangeslider(target=null,value=null,step=null,set=null,range=false,scale=true,labels=true,tooltip=true,style="roundstyle",lebel="",onchangecallback=null,stylelist=null){
 	let input
