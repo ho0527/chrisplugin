@@ -310,7 +310,7 @@ function ajax(method,url,onloadcallback,send=null,header=[["Content-type","multi
 
 				try{
 					data=JSON.parse(this.responseText)
-				}finally{
+				}catch(error){
 					onloadcallback(this,data)
 				}
 			}
