@@ -1373,6 +1373,7 @@ function click(element){
 function onclick(element,callback=function(){},samecheck=false){
 	if(samecheck){
 		domgetall(element).forEach(function(event){
+			event.style.cursor="pointer"
 			event.onclick=function(onevent){
 				if(onevent.target==event){
 					callback(event,onevent)
@@ -4362,17 +4363,20 @@ function nextpage(){
 	history.forward()
 }
 
-async function importhtml(element,url){
-	let data=await fetch(url)
-	let text=await data.text()
-
-	domgetall(element).forEach(function(event){
-		event.innerHTML=text
-		event.querySelectorAll("script").forEach(function(script){
-			let newscript=document.createElement("script")
-			newscript.textContent=script.textContent
-			event.appendChild(newscript)
+function importhtml(element,url,callback=function(){}){
+	fetch(url).then(function(response){
+		return response.text()
+	}).then(function(text){
+		domgetall(element).forEach(function(event){
+			event.innerHTML=text
+			event.querySelectorAll("script").forEach(function(script){
+				let newscript=document.createElement("script")
+				newscript.textContent=script.textContent
+				event.appendChild(newscript)
+			})
 		})
+	}).then(function(text){
+		callback(text)
 	})
 }
 
