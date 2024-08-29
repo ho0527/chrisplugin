@@ -4363,21 +4363,20 @@ function nextpage(){
 	history.forward()
 }
 
-function importhtml(element,url,callback=function(){}){
-	fetch(url).then(function(response){
-		return response.text()
-	}).then(function(text){
-		domgetall(element).forEach(function(event){
-			event.innerHTML=text
-			event.querySelectorAll("script").forEach(function(script){
-				let newscript=document.createElement("script")
-				newscript.textContent=script.textContent
-				event.appendChild(newscript)
-			})
+async function importhtml(element,url,callback=function(){}){
+	let data=await fetch(url)
+	let text=await data.text()
+
+	domgetall(element).forEach(function(event){
+		event.innerHTML=text
+		event.querySelectorAll("script").forEach(function(script){
+			let newscript=document.createElement("script")
+			newscript.textContent=script.textContent
+			event.appendChild(newscript)
 		})
-	}).then(function(text){
-		callback(text)
 	})
+
+	callback()
 }
 
 // testing
