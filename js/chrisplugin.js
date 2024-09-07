@@ -396,6 +396,22 @@ function newajax(method,url,onloadcallback,send=null,header=[["Content-type","mu
 	}
 }
 
+function closelightbox(){
+	docgetall(".lightboxmask")[0].style.transform="translateY(-100%)"
+
+	setTimeout(function(){
+		docgetall(".lightboxmask")[0].innerHTML=``
+	},300)
+}
+
+function lightboxclose(){
+	docgetall(".lightboxmask")[0].style.transform="translateY(-100%)"
+
+	setTimeout(function(){
+		docgetall(".lightboxmask")[0].innerHTML=``
+	},300)
+}
+
 function lightbox(clickelement,element,lightboxhtml,closelement=null,islightboxclosewithkeyesc=true,clickcolse="mask"){
 	let click=false
 
@@ -744,22 +760,6 @@ function smoothscroll(id){
 	}else{
 		conlog("[ERROR]function smoothscroll id not found","red","12")
 	}
-}
-
-function closelightbox(){
-	docgetall(".lightboxmask")[0].style.transform="translateY(-100%)"
-
-	setTimeout(function(){
-		docgetall(".lightboxmask")[0].innerHTML=``
-	},300)
-}
-
-function lightboxclose(){
-	docgetall(".lightboxmask")[0].style.transform="translateY(-100%)"
-
-	setTimeout(function(){
-		docgetall(".lightboxmask")[0].innerHTML=``
-	},300)
 }
 
 function tag(tagdiv,taglist,newtag=function(){}){
