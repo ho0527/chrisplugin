@@ -5164,6 +5164,62 @@ function codebeautifier(code,language){
     return `<pre class="codebeautifier ${language}"><code>${numbercode}</code></pre>`
 }
 
+function char(id,type,label,data){
+	if(type=="line"){
+		const canvas = document.getElementById(id)
+		canvas.style.border="1px black solid"
+		const paper = canvas.getContext("2d")
+
+		const padding = 50
+		const chartWidth = canvas.width - padding * 2
+		const chartHeight = canvas.height - padding * 2
+
+		// 計算X軸與Y軸的比例
+		const xSpacing = chartWidth / (label.length - 1)
+		const yMax = Math.max(...data)
+		const yMin = Math.min(...data)
+		const yRange = yMax - yMin
+
+		// 繪製X軸和Y軸
+		paper.beginPath()
+		paper.moveTo(padding, padding)
+		paper.lineTo(padding, canvas.height - padding)
+		paper.lineTo(canvas.width - padding, canvas.height - padding)
+		paper.stroke()
+
+		// 標記X軸標籤
+		label.forEach((label, index) => {
+			const x = padding + index * xSpacing
+			const y = canvas.height - padding
+
+			paper.fillText(label, x - 20, y + 20)  // 調整位置使文字居中
+		});
+
+		// 標記Y軸標籤
+		const ySteps = 5
+		for (let i = 0; i <= ySteps; i++) {
+			const yValue = yMin + (yRange / ySteps) * i
+			const y = canvas.height - padding - (chartHeight / ySteps) * i
+
+			paper.fillText(yValue.toFixed(2), padding - 40, y + 5) // 調整位置使文字居中
+		}
+
+		// 繪製折線
+		paper.beginPath()
+		data.forEach((point, index) => {
+			const x = padding + index * xSpacing
+			const y = canvas.height - padding - (point - yMin) / yRange * chartHeight
+
+			if (index === 0) {
+				paper.moveTo(x, y)
+			} else {
+				paper.lineTo(x, y)
+			}
+		})
+		paper.stroke()
+	}
+}
+
 // window onload START
 windowload(function(event){
 	// 刷新lightbox
