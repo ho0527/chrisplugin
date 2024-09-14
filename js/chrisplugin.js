@@ -5168,6 +5168,7 @@ function char(id,type,label,data){
 	if(type=="line"){
 		const canvas = document.getElementById(id)
 		canvas.style.border="1px black solid"
+		canvas.style.background="whitesmoke"
 		const paper = canvas.getContext("2d")
 
 		const padding = 50
