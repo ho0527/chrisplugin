@@ -5176,8 +5176,8 @@ function char(id,type,label,data){
 
 		// 計算X軸與Y軸的比例
 		const xSpacing = chartWidth / (label.length - 1)
-		const yMax = Math.max(...data)
-		const yMin = Math.min(...data)
+		const yMax = Math.max(...data)+10
+		const yMin = Math.min(...data)-10
 		const yRange = yMax - yMin
 
 		// 繪製X軸和Y軸
