@@ -5004,7 +5004,9 @@ function dompush(element,dom="div",data=``,setting={}){
 	document.querySelectorAll(element).forEach(function(event){
 		let createelement=document.createElement(dom)
 		let dataset=setting["dataset"]?setting["dataset"]:{}
-		createelement.innerHTML=data
+		if(data!=false){
+			createelement.innerHTML=data
+		}
 		if(setting["id"])
 			createelement.id=setting["id"]
 		if(setting["class"])
@@ -5015,6 +5017,8 @@ function dompush(element,dom="div",data=``,setting={}){
 			createelement.src=setting["src"]
 		if(setting["alt"])
 			createelement.alt=setting["alt"]
+		if(setting["href"])
+			createelement.href=setting["href"]
 		if(setting["title"])
 			createelement.title=setting["title"]
 		for(let key in dataset){
