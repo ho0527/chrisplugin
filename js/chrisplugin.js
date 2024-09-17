@@ -4180,12 +4180,56 @@ function href(url){
 }
 
 function dataset(element,key,value=null){
-	if(element){
+	let elementcount
+
+	if(typeof element=="object"){
+		if(element.length){
+			element.forEach(function(event){
+				elementcount=elementcount+1
+			})
+		}else{
+			if(!element){
+				throw "[DOMNOTFOUND_ERROR]function dataset can't find given element"
+			}
+		}
+	}else{
+		domgetall(element).forEach(function(event){
+			elementcount=elementcount+1
+		})
+	}
+
+	if(0<elementcount){
 		if(value!=null){
-			element.dataset[key]=value
-			return element.dataset[key]
+			if(typeof element=="object"){
+				if(element.length){
+					element.forEach(function(event){
+						event.dataset[key]=value
+					})
+				}else{
+					element.dataset[key]=value
+				}
+			}else{
+				domgetall(element).forEach(function(event){
+					event.dataset[key]=value
+				})
+			}
+			return value
 		}else if(element.dataset[key]){
-			return element.dataset[key]
+			let data=[]
+			if(typeof element=="object"){
+				if(element.length){
+					element.forEach(function(event){
+						data.push(event.dataset[key])
+					})
+				}else{
+					data.push(element.dataset[key])
+				}
+			}else{
+				domgetall(element).forEach(function(event){
+					data.push(event.dataset[key])
+				})
+			}
+			return data.length==1?data[0]:data
 		}else{
 			throw "[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset"
 		}
