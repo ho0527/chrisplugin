@@ -4180,62 +4180,77 @@ function href(url){
 }
 
 function dataset(element,key,value=null){
-	let elementcount
+    let elementcount=0
 
-	if(typeof element=="object"){
-		if(element.length){
-			element.forEach(function(event){
-				elementcount=elementcount+1
-			})
-		}else{
-			if(!element){
-				throw "[DOMNOTFOUND_ERROR]function dataset can't find given element"
-			}
-		}
-	}else{
-		domgetall(element).forEach(function(event){
-			elementcount=elementcount+1
-		})
-	}
+    if(typeof element=="object"){
+        if(element){
+            if(element.length){
+                element.forEach(function(event){
+                    elementcount=elementcount+1
+                })
+            }else{
+                if(element){
+                    elementcount=1
+                }else{
+                    throw "[DOMNOTFOUND_ERROR]function dataset can't find given element"
+                    return null
+                }
+            }
+        }else{
+            throw "[DOMNOTFOUND_ERROR]function dataset can't find given element"
+            return null
+        }
+    }else{
+        domgetall(element).forEach(function(event){
+            elementcount=elementcount+1
+        })
+    }
 
-	if(0<elementcount){
-		if(value!=null){
-			if(typeof element=="object"){
-				if(element.length){
-					element.forEach(function(event){
-						event.dataset[key]=value
-					})
-				}else{
-					element.dataset[key]=value
-				}
-			}else{
-				domgetall(element).forEach(function(event){
-					event.dataset[key]=value
-				})
-			}
-			return value
-		}else if(element.dataset[key]){
-			let data=[]
-			if(typeof element=="object"){
-				if(element.length){
-					element.forEach(function(event){
-						data.push(event.dataset[key])
-					})
-				}else{
-					data.push(element.dataset[key])
-				}
-			}else{
-				domgetall(element).forEach(function(event){
-					data.push(event.dataset[key])
-				})
-			}
-			return data.length==1?data[0]:data
-		}else{
-			throw "[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset"
-		}
-	}else{
-		throw "[DOMNOTFOUND_ERROR]function dataset can't find given element"
-	}
+    if(0<elementcount){
+        let data=[]
+        if(typeof element=="object"){
+            if(element.length){
+                element.forEach(function(event){
+                    if(value!=null){
+                        event.dataset[key]=value
+                    }else if(!event.dataset[key]){
+                        throw "[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset"
+                        return null
+                    }
+                    data.push(event.dataset[key])
+                })
+            }else{
+                if(value!=null){
+                    element.dataset[key]=value
+                }else if(!element.dataset[key]){
+                    throw "[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset"
+                    return null
+                }
+                data.push(element.dataset[key])
+            }
+        }else{
+            domgetall(element).forEach(function(event){
+                if(value!=null){
+                    event.dataset[key]=value
+                }else if(!event.dataset[key]){
+                    throw "[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset"
+                    return null
+                }
+                data.push(event.dataset[key])
+            })
+        }
+        if(data.length==0){
+            throw "[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset"
+            return null
+        }else if(data.length==1){
+            return data[0]
+        }else{
+            return data
+        }
+    }else{
+        throw "[DOMNOTFOUND_ERROR]function dataset can't find given element"
+        return null
+    }
 }
 
 function getfile(){
