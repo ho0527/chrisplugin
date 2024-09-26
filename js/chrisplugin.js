@@ -4438,6 +4438,22 @@ async function importhtml(element,url,callback=function(){}){
 	callback()
 }
 
+async function domload(element,url,callback=function(){}){
+	let data=await fetch(url)
+	let text=await data.text()
+
+	domgetall(element).forEach(function(event){
+		event.innerHTML=text
+		event.querySelectorAll("script").forEach(function(script){
+			let newscript=document.createElement("script")
+			newscript.textContent=script.textContent
+			event.appendChild(newscript)
+		})
+	})
+
+	callback()
+}
+
 // testing
 function searchtagdiv(element,searchname,data){
     let sys = {
