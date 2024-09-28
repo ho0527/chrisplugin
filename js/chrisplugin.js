@@ -4361,17 +4361,12 @@ function removeclass(element,classlist=[]){
 	}
 }
 
+function getsearchkey(key){
+	return new URLSearchParams(location.search).get(key)
+}
+
 function getget(key){
-	if(location.href.split("?")[1]){
-		let getlist=location.href.split("?")[1].split("&")
-		for(let i=0;i<getlist.length;i=i+1){
-			if(getlist[i].split("=")[0]==key){
-				return getlist[i].split("=")[1]
-			}
-		}
-	}else{
-		return null
-	}
+	return new URLSearchParams(location.search).get(key)
 }
 
 function array(data){
