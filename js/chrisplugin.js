@@ -1410,7 +1410,9 @@ function dataset(element,key,value=null){
 }
 
 function getfile(){
-	return location.href.split("?")[0].split("#")[0].split("/")[location.href.split("/").length-1]
+	let url=new URL(window.location.href)
+	let pathname=url.pathname
+	return pathname.substring(pathname.lastIndexOf("/")+1)
 }
 
 function style(element,style=[]){
