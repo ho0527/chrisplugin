@@ -2393,7 +2393,7 @@ function codebeautifier(code,language){
     }).join('\n')
 
     // 生成最終的 HTML 結構
-    return `<pre class="codebeautifier ${language}"><code>${numbercode}</code></pre>`
+    return `<pre class="codebeautifier ${language}" style="tab-size: 4;"><code>${numbercode}</code></pre>`
 }
 
 function char(id,type,label,data){
