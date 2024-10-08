@@ -2454,7 +2454,8 @@ function char(id,type,label,data){
 }
 
 // window onload START
-onload(window,function(event){
+onload(window,function(element,event){
+	console.log(element)
 	// 刷新lightbox
 	if(domgetid("lightbox")){
 		domgetid("lightbox").style.display="none"
