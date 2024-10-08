@@ -1594,13 +1594,25 @@ async function importhtml(element,url,callback=function(){}){
 async function domload(element,url,callback=function(){}){
 	let data=await fetch(url)
 	let text=await data.text()
+	let parser=new DOMParser()
+	let doc=parser.parseFromString(text,"text/html")
 
 	domgetall(element).forEach(function(event){
-		event.innerHTML=text
-		event.querySelectorAll("script").forEach(function(script){
-			let newscript=document.createElement("script")
-			newscript.textContent=script.textContent
-			event.appendChild(newscript)
+		while(doc.body.children.length > 0){
+			event.appendChild(doc.body.children[0])
+		}
+
+	  	// 手動遍歷並執行新添加的 <script> 標籤
+	  	event.querySelectorAll("script").forEach(function(script){
+			if(script.src){
+				// 如果是外部 script 標籤,動態創建 <script> 標籤並添加
+				let newScript=document.createElement("script")
+				newScript.src=script.src
+				event.appendChild(newScript)
+			}else{
+				// 如果是內嵌 script 標籤,直接執行
+				eval(script.innerHTML)
+			}
 		})
 	})
 
@@ -1609,55 +1621,55 @@ async function domload(element,url,callback=function(){}){
 
 // testing
 function searchtagdiv(element,searchname,data){
-    let sys = {
+    let sys={
         show: false,
         search: "",
         searchresults: [],
         searchData: data,
         fun: function(text) {
             if(text === "") {
-                sys.show = false
-                document.getElementById("searchtagdiv").style.display = "none"
+                sys.show=false
+                document.getElementById("searchtagdiv").style.display="none"
                 return
             }
-            const searchText = text.toLowerCase()
-            sys.searchresults = sys.searchData.filter(item =>
+            const searchText=text.toLowerCase()
+            sys.searchresults=sys.searchData.filter(item =>
                 item.toLowerCase().includes(searchText)
             )
-            sys.searchresults.sort((a, b) => {
+            sys.searchresults.sort((a,b) => {
                 return a.length - b.length
             })
-            sys.show = sys.searchresults.length > 0
+            sys.show=sys.searchresults.length > 0
             renderResults()
         }
     }
 
     function renderResults() {
-        document.getElementById("searchtagdiv").innerHTML = ""
+        document.getElementById("searchtagdiv").innerHTML=""
         if(sys.show) {
             sys.searchresults.forEach((item) => {
-                let div = document.createElement("div")
-                div.classList = "tagdiv"
-                div.style.display = "flex"
-                div.style.marginBottom = "8px"
-                div.style.width = "100%"
-                div.style.cursor = "pointer"
-                div.innerHTML = `<div style="margin: 0; white-space: nowrap; width: 50%; font-weight: bolder;">${item}</div>`
-                div.onclick = () => {
-                    document.getElementById(searchname).value = item
-                    sys.search = item
-                    document.getElementById("searchtagdiv").style.display = "none"
+                let div=document.createElement("div")
+                div.classList="tagdiv"
+                div.style.display="flex"
+                div.style.marginBottom="8px"
+                div.style.width="100%"
+                div.style.cursor="pointer"
+                div.innerHTML=`<div style="margin: 0; white-space: nowrap; width: 50%; font-weight: bolder;">${item}</div>`
+                div.onclick=() => {
+                    document.getElementById(searchname).value=item
+                    sys.search=item
+                    document.getElementById("searchtagdiv").style.display="none"
                 }
                 document.getElementById("searchtagdiv").appendChild(div)
             })
-            document.getElementById("searchtagdiv").style.display = "block"
+            document.getElementById("searchtagdiv").style.display="block"
         } else {
-            document.getElementById("searchtagdiv").style.display = "none"
+            document.getElementById("searchtagdiv").style.display="none"
         }
     }
 
-    document.getElementById(searchname).addEventListener("input", function(e) {
-        sys.search = e.target.value
+    document.getElementById(searchname).addEventListener("input",function(e) {
+        sys.search=e.target.value
         sys.fun(sys.search)
     })
 
@@ -2398,55 +2410,55 @@ function codebeautifier(code,language){
 
 function char(id,type,label,data){
 	if(type=="line"){
-		const canvas = document.getElementById(id)
+		const canvas=document.getElementById(id)
 		canvas.style.border="1px black solid"
 		canvas.style.background="whitesmoke"
-		const paper = canvas.getContext("2d")
+		const paper=canvas.getContext("2d")
 
-		const padding = 50
-		const chartWidth = canvas.width - padding * 2
-		const chartHeight = canvas.height - padding * 2
+		const padding=50
+		const chartWidth=canvas.width - padding * 2
+		const chartHeight=canvas.height - padding * 2
 
 		// 計算X軸與Y軸的比例
-		const xSpacing = chartWidth / (label.length - 1)
-		const yMax = Math.max(...data)+10
-		const yMin = Math.min(...data)-10
-		const yRange = yMax - yMin
+		const xSpacing=chartWidth / (label.length - 1)
+		const yMax=Math.max(...data)+10
+		const yMin=Math.min(...data)-10
+		const yRange=yMax - yMin
 
 		// 繪製X軸和Y軸
 		paper.beginPath()
-		paper.moveTo(padding, padding)
-		paper.lineTo(padding, canvas.height - padding)
-		paper.lineTo(canvas.width - padding, canvas.height - padding)
+		paper.moveTo(padding,padding)
+		paper.lineTo(padding,canvas.height - padding)
+		paper.lineTo(canvas.width - padding,canvas.height - padding)
 		paper.stroke()
 
 		// 標記X軸標籤
-		label.forEach((label, index) => {
-			const x = padding + index * xSpacing
-			const y = canvas.height - padding
+		label.forEach((label,index) => {
+			const x=padding + index * xSpacing
+			const y=canvas.height - padding
 
-			paper.fillText(label, x - 20, y + 20)  // 調整位置使文字居中
+			paper.fillText(label,x - 20,y + 20)  // 調整位置使文字居中
 		});
 
 		// 標記Y軸標籤
-		const ySteps = 5
-		for (let i = 0; i <= ySteps; i++) {
-			const yValue = yMin + (yRange / ySteps) * i
-			const y = canvas.height - padding - (chartHeight / ySteps) * i
+		const ySteps=5
+		for (let i=0; i <= ySteps; i++) {
+			const yValue=yMin + (yRange / ySteps) * i
+			const y=canvas.height - padding - (chartHeight / ySteps) * i
 
-			paper.fillText(yValue.toFixed(2), padding - 40, y + 5) // 調整位置使文字居中
+			paper.fillText(yValue.toFixed(2),padding - 40,y + 5) // 調整位置使文字居中
 		}
 
 		// 繪製折線
 		paper.beginPath()
-		data.forEach((point, index) => {
-			const x = padding + index * xSpacing
-			const y = canvas.height - padding - (point - yMin) / yRange * chartHeight
+		data.forEach((point,index) => {
+			const x=padding + index * xSpacing
+			const y=canvas.height - padding - (point - yMin) / yRange * chartHeight
 
 			if (index === 0) {
-				paper.moveTo(x, y)
+				paper.moveTo(x,y)
 			} else {
-				paper.lineTo(x, y)
+				paper.lineTo(x,y)
 			}
 		})
 		paper.stroke()
