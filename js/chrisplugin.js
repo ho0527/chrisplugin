@@ -1594,25 +1594,13 @@ async function importhtml(element,url,callback=function(){}){
 async function domload(element,url,callback=function(){}){
 	let data=await fetch(url)
 	let text=await data.text()
-	let parser=new DOMParser()
-	let doc=parser.parseFromString(text,"text/html")
 
 	domgetall(element).forEach(function(event){
-		while(doc.body.children.length > 0){
-			event.appendChild(doc.body.children[0])
-		}
-
-	  	// 手動遍歷並執行新添加的 <script> 標籤
-	  	event.querySelectorAll("script").forEach(function(script){
-			if(script.src){
-				// 如果是外部 script 標籤,動態創建 <script> 標籤並添加
-				let newScript=document.createElement("script")
-				newScript.src=script.src
-				event.appendChild(newScript)
-			}else{
-				// 如果是內嵌 script 標籤,直接執行
-				eval(script.innerHTML)
-			}
+		event.innerHTML=text
+		event.querySelectorAll("script").forEach(function(script){
+			let newscript=document.createElement("script")
+			newscript.textContent=script.textContent
+			event.appendChild(newscript)
 		})
 	})
 
