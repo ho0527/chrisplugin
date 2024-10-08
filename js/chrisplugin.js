@@ -1410,7 +1410,7 @@ function dataset(element,key,value=null){
 }
 
 function getfile(){
-	return location.href.split("/")[location.href.split("/").length-1].split("?")[0].split("#")[0]
+	return location.href.split("?")[0].split("#")[0].split("/")[location.href.split("/").length-1]
 }
 
 function style(element,style=[]){
