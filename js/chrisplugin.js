@@ -2454,8 +2454,7 @@ function char(id,type,label,data){
 }
 
 // window onload START
-onload(window,function(element,event){
-	console.log(element)
+window.onload=function(element,event){
 	// 刷新lightbox
 	if(domgetid("lightbox")){
 		domgetid("lightbox").style.display="none"
@@ -2481,5 +2480,5 @@ onload(window,function(element,event){
 	onchange("textarea",function(element,event){
 		element.parentNode.classList.remove("error")
 	})
-})
+}
 // window onload END
