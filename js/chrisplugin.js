@@ -924,14 +924,14 @@ function on(key,element,callback=function(){}){
 		if(element.length){
 			try{
 				element.forEach(function(event){
-					event["on"+key]=function(onevent){ callback(event,onevent) }
+					event.addEventListener(key,function(onevent){ callback(event,onevent) })
 				})
 			}catch(error){
 				console.error("[KEYTYPEIN ERROR]function on* key not found keyname-->"+key)
 			}
 		}else{
 			try{
-				element["on"+key]=function(onevent){ callback(element,onevent) }
+				element.addEventListener(key,function(onevent){ callback(element,onevent) })
 			}catch(error){
 				console.error("[KEYTYPEIN ERROR]function on* key not found keyname-->"+key)
 			}
@@ -939,7 +939,7 @@ function on(key,element,callback=function(){}){
 	}else{
 		try{
 			domgetall(element,function(event){
-				event["on"+key]=function(onevent){ callback(event,onevent) }
+				event.addEventListener(key,function(onevent){ callback(event,onevent) })
 			})
 		}catch(error){
 			console.error("[KEYTYPEIN ERROR]function on* key not found keyname-->"+key)
@@ -2454,7 +2454,7 @@ function char(id,type,label,data){
 }
 
 // window onload START
-window.onload=function(){
+onload(window,function(){
 	// 刷新lightbox
 	if(document.getElementById("lightbox")){
 		document.getElementById("lightbox").style.display="none"
@@ -2480,5 +2480,5 @@ window.onload=function(){
 	onchange("textarea",function(element,event){
 		element.parentNode.classList.remove("error")
 	})
-}
+})
 // window onload END
