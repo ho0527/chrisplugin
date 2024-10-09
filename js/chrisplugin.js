@@ -2454,21 +2454,21 @@ function char(id,type,label,data){
 }
 
 // window onload START
-window.onload=function(element,event){
+window.onload=function(){
 	// 刷新lightbox
-	if(domgetid("lightbox")){
-		domgetid("lightbox").style.display="none"
-		domgetid("lightbox").classList.add("lightboxmask")
+	if(document.getElementById("lightbox")){
+		document.getElementById("lightbox").style.display="none"
+		document.getElementById("lightbox").classList.add("lightboxmask")
 		setTimeout(function(){
-			domgetid("lightbox").style.display="block"
+			document.getElementById("lightbox").style.display="block"
 		},100)
 	}
 
 	// 順滑移動#
 	if(location.href.split("#").length>1){
 		let id=location.href.split("#")[location.href.split("#").length-1]
-		if(domgetid(id)){
-			domgetid(id).scrollIntoView({ behavior: "smooth" })
+		if(document.getElementById(id)){
+			document.getElementById(id).scrollIntoView({ behavior: "smooth" })
 		}
 	}
 
