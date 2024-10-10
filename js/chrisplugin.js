@@ -1348,12 +1348,12 @@ function dataset(element,key,value=null){
                 if(element){
                     elementcount=1
                 }else{
-                    throw "[DOMNOTFOUND_ERROR]function dataset can't find given element"
+                    console.error("[DOMNOTFOUND_ERROR]function dataset can't find given element")
                     return null
                 }
             }
         }else{
-            throw "[DOMNOTFOUND_ERROR]function dataset can't find given element"
+            console.error("[DOMNOTFOUND_ERROR]function dataset can't find given element")
             return null
         }
     }else{
@@ -1370,7 +1370,7 @@ function dataset(element,key,value=null){
                     if(value!=null){
                         event.dataset[key]=value
                     }else if(!event.dataset[key]){
-                        throw "[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset"
+                        console.error("[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset")
                         return null
                     }
                     data.push(event.dataset[key])
@@ -1379,7 +1379,7 @@ function dataset(element,key,value=null){
                 if(value!=null){
                     element.dataset[key]=value
                 }else if(!element.dataset[key]){
-                    throw "[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset"
+                    console.error("[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset")
                     return null
                 }
                 data.push(element.dataset[key])
@@ -1389,14 +1389,14 @@ function dataset(element,key,value=null){
                 if(value!=null){
                     event.dataset[key]=value
                 }else if(!event.dataset[key]){
-                    throw "[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset"
+                    console.error("[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset")
                     return null
                 }
                 data.push(event.dataset[key])
             })
         }
         if(data.length==0){
-            throw "[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset"
+            console.error("[DOMNOTFOUND_ERROR]function dataset can't find given element")
             return null
         }else if(data.length==1){
             return data[0]
@@ -1404,7 +1404,7 @@ function dataset(element,key,value=null){
             return data
         }
     }else{
-        throw "[DOMNOTFOUND_ERROR]function dataset can't find given element"
+        console.error("[DOMNOTFOUND_ERROR]function dataset can't find given element")
         return null
     }
 }
