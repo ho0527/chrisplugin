@@ -265,7 +265,7 @@ function oldajax(method,url,send=null,header=[["Content-type","multipart/form-da
 	return xmlrequest
 }
 
-function ajax(method,url,onloadcallback,send=null,header=[["Content-type","multipart/form-data"]],progresscallback=function(processevent,percentage){},statechange=[function(){},function(){},function(){},function(){}],callback=[]){
+function ajax(method,url,onloadcallback,send=null,header=[],progresscallback=function(processevent,percentage){},statechange=[function(){},function(){},function(){},function(){}],callback=[]){
 	let check=true
 	if(method==null){
 		conlog("function ajax method requset","red","12")
