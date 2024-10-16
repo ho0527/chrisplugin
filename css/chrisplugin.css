@@ -492,7 +492,7 @@ body[scroll]::-webkit-scrollbar-thumb{
 	}
 }
 
-.codebeautifier {
+.codebeautifiermaindiv {
 	font-family: "consolas";
 	background: rgb(24, 25, 26);
 	color: rgb(189, 194, 202);
@@ -500,6 +500,17 @@ body[scroll]::-webkit-scrollbar-thumb{
 	border-radius: 10px;
 	line-height: 1.25;
 	overflow-x: auto;
+}
+
+
+.codebeautifier{
+	font-family: "consolas";
+    background: rgb(42, 47, 59);
+    color: rgb(189, 194, 202);
+    padding: 15px;
+    border-radius: 10px;
+    line-height: 1.25;
+    overflow-x: auto;
 }
 
 .codebeautifier .linenumber {
@@ -528,8 +539,42 @@ body[scroll]::-webkit-scrollbar-thumb{
 	font-style: italic;
 }
 
-.code-beautifier .function{
+.codebeautifier .function{
 	color: rgb(188,151,229);
+}
+
+.copybutton{
+	border: 2px var(--accent-color, var(--stgray-800)) solid;
+	outline: none;
+	box-sizing: border-box;
+	white-space: nowrap;
+	width: auto;
+	height: var(--height);
+	border-radius: 0.4rem;
+	background: var(--accent-color, var(--stgray-800));
+	font: inherit;
+	font-size: var(--stfont-size-14px);
+	font-weight: 500;
+	text-decoration: none;
+	text-align: center;
+	text-overflow: ellipsis;
+	color: var(--accent-foreground-color, var(--stgray-50));
+	line-height: 1.5;
+	padding: 0px 10px;
+	margin: 2px;
+	display: inline-flex;
+	vertical-align: middle;
+	justify-content: center;
+	align-items: center;
+	transition: 0.2s linear;
+	appearance: none;
+	overflow: hidden;
+	user-select: none;
+}
+
+.copybutton:hover:not([disabled]) {
+	cursor: pointer;
+	opacity: 0.8;
 }
 
 .tagdivdiv{

@@ -2339,61 +2339,95 @@ function chash(x,type="encode",encoding="utf-8"){
 	}
 }
 
+// 複製功能
+function copytoclipboard(element,text,callback=function(event){
+    element.value="copy!"
+    setTimeout(function(){
+        element.value="copy"
+    },1500)
+}){
+    console.log(text)
+    navigator.clipboard.writeText(text).then(function(){
+        callback(this)
+    }).catch(function(error){
+        console.error("[FUNCTION_ERROR]function copytoclipboard error: could not copy to clipboard")
+        console.error(error)
+    })
+}
+
+// 用來移除行號的函數
+function getcleancode_onlyforcodebeautifierdontuseit(button){
+    let element=button.parentNode.parentNode.querySelector(".codebeautifier")
+    let oldinnerhtml=element.innerHTML
+    let returntext
+
+    element.querySelectorAll(".linenumber").forEach(function(line){
+        line.remove()
+    }) // 移除行號元素
+
+    returntext=element.innerText // 獲取去除行號的程式碼
+    element.innerHTML=oldinnerhtml // 將原本的程式碼元素內容複製到新的元素中
+
+    return returntext
+}
+
 function codebeautifier(code,language){
-    // 定義不同語言的關鍵字
     let keyword={
-        "javascript": ["function","return","if","else","for","while","var","let","let","document","console"],
-        "js": ["function","return","if","else","for","while","var","let","let"],
+        "javascript": ["function","return","if","else","for","while","var","let","const","document","console"],
+        "js": ["function","return","if","else","for","while","var","let","const"],
         "python": ["def","return","if","elif","else","for","while","import","from","as"],
         "py": ["def","return","if","elif","else","for","while","import","from","as"],
         "html": ["html","head","body","div","span","p","a","img","script","style"]
-        // 可以繼續添加其他語言
     }[language]||[]
     let line=""
-	let numbercode=""
+    let numbercode=""
 
-    // 使用一個helper函數來處理所有的語法高亮
     function highlight(text,classname){
         return `<span class="${classname}">${text}</span>`
     }
 
-    // 首先轉義所有HTML特殊字符
-    code=code.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    code=code.replace(/&/g,"&amp").replace(/</g,"&lt").replace(/>/g,"&gt")
 
-    // 使用正則表達式一次性處理所有語法元素
-	if(["javascript","js","python","py"].includes(language)){
-		code=code.replace(
-			new RegExp(`\\b(${keyword.join("|")})\\b|(".*?"|'.*?')|(//.*$)|(?:function\\s+(\\w+)\\s*\\(|(?:const|let|var)\\s+(\\w+)\\s*=\\s*(?:function\\s*\\(|\\([^)]*\\)\\s*=>))`,"gm"),
-			function(match,keyword,string,comment,functionname1,functionname2){
-				if(keyword){ return highlight(keyword,"keyword") }
-				if(string){ return highlight(string,"string") }
-				if(comment){ return highlight(comment,"comment") }
-				if (functionname1||functionname2){
-					return match.replace(functionname1||functionname2,highlight(functionname1||functionname2,"function"))
-				}
-				return match
-			}
-		)
-	}else{
-		code=code.replace(
-			new RegExp(`\\b(${keyword.join("|")})\\b|(".*?"|'.*?')|(//.*$)`,"gm"),
-			function(match,keyword,string,comment){
-				if(keyword){ return highlight(keyword,"keyword") }
-				if(string){ return highlight(string,"string") }
-				if(comment){ return highlight(comment,"comment") }
-				return match
-			}
-		)
-	}
+    if(["javascript","js","python","py"].includes(language)){
+        code=code.replace(
+            new RegExp(`\\b(${keyword.join("|")})\\b|(".*?"|'.*?')|(//.*$)|(?:function\\s+(\\w+)\\s*\\(|(?:const|let|var)\\s+(\\w+)\\s*=\\s*(?:function\\s*\\(|\\([^)]*\\)\\s*=>))`,"gm"),
+            function(match,keyword,string,comment,functionname1,functionname2){
+                if(keyword){ return highlight(keyword,"keyword") }
+                if(string){ return highlight(string,"string") }
+                if(comment){ return highlight(comment,"comment") }
+                if(functionname1||functionname2){
+                    return match.replace(functionname1||functionname2,highlight(functionname1||functionname2,"function"))
+                }
+                return match
+            }
+        )
+    }else{
+        code=code.replace(
+            new RegExp(`\\b(${keyword.join("|")})\\b|(".*?"|'.*?')|(//.*$)`,"gm"),
+            function(match,keyword,string,comment){
+                if(keyword){ return highlight(keyword,"keyword") }
+                if(string){ return highlight(string,"string") }
+                if(comment){ return higaght(comment,"comment") }
+                return match
+            }
+        )
+    }
 
-    // 添加行號
-    line=code.split('\n');
+    line=code.split("\n")
     numbercode=line.map(function(line,index){
         return `<span class="linenumber">${index+1}</span>${line}`
-    }).join('\n')
+    }).join("\n")
 
-    // 生成最終的 HTML 結構
-    return `<pre class="codebeautifier ${language}" style="tab-size: 4;"><code>${numbercode}</code></pre>`
+    return `
+        <div class="codebeautifiermaindiv">
+            <div style="display: flex;justify-content: space-between;align-items: center;padding: 5px;">
+                <div>${language}</div>
+                <input type="button" class="copybutton" onclick="copytoclipboard(this,getcleancode_onlyforcodebeautifierdontuseit(this))" value="copy">
+            </div>
+            <hr style="margin: 5px 0px;">
+            <pre class="codebeautifier ${language}" style="tab-size: 4"><code>${numbercode}</code></pre>
+        </div>
+    `
 }
 
 function char(id,type,label,data){
