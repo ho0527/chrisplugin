@@ -2407,7 +2407,7 @@ function codebeautifier(code,language){
             function(match,keyword,string,comment){
                 if(keyword){ return highlight(keyword,"keyword") }
                 if(string){ return highlight(string,"string") }
-                if(comment){ return higaght(comment,"comment") }
+                if(comment){ return highlight(comment,"comment") }
                 return match
             }
         )
