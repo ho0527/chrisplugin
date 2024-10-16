@@ -496,9 +496,10 @@ body[scroll]::-webkit-scrollbar-thumb{
 	font-family: "consolas";
 	background: rgb(24, 25, 26);
 	color: rgb(189, 194, 202);
-	padding: 15px;
 	border-radius: 10px;
 	line-height: 1.25;
+	padding: 15px;
+	margin: 10px 0px;
 	overflow-x: auto;
 }
 
