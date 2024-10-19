@@ -1340,11 +1340,11 @@ function dataset(element,key,value=null){
 
     if(typeof element=="object"){
         if(element){
-            if(element.length){
+            try{
                 element.forEach(function(event){
                     elementcount=elementcount+1
                 })
-            }else{
+            }catch(error){
                 if(element){
                     elementcount=1
                 }else{
@@ -1365,7 +1365,7 @@ function dataset(element,key,value=null){
     if(0<elementcount){
         let data=[]
         if(typeof element=="object"){
-            if(element.length){
+            try{
                 element.forEach(function(event){
                     if(value!=null){
                         event.dataset[key]=value
@@ -1375,7 +1375,7 @@ function dataset(element,key,value=null){
                     }
                     data.push(event.dataset[key])
                 })
-            }else{
+            }catch(error){
                 if(value!=null){
                     element.dataset[key]=value
                 }else if(!element.dataset[key]){
