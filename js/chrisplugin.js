@@ -1315,7 +1315,7 @@ function getvalue(element){
 
 			if(data.length==0){
 				data=null
-			}else{
+			}else if(data.length==1){
 				data=data[0]
 			}
 
