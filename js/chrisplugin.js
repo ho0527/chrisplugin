@@ -1313,10 +1313,6 @@ function getvalue(element){
 				data.push(event.value)
 			})
 
-			if(data.length==0){
-				data=null
-			}
-
 			return data
 		}
 	}
