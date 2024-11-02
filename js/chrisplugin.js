@@ -1304,7 +1304,17 @@ function getvalue(element){
 			return element.value
 		}
 	}else{
-		return domgetid(element).value
+		if(domgetid(element))
+			return domgetid(element).value
+		else{
+			data=[]
+
+			domgetall(element,function(event){
+				data.push(event.value)
+			})
+
+			return data
+		}
 	}
 }
 
