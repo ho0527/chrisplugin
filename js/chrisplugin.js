@@ -1145,6 +1145,23 @@ function click(element){
 	}
 }
 
+// submit
+function submit(element){
+	if(typeof element=="object"){
+		if(element.length){
+			element.forEach(function(event){
+				event.submit()
+			})
+		}else{
+			element.submit()
+		}
+	}else{
+		domgetall(element).forEach(function(event){
+			event.submit()
+		})
+	}
+}
+
 // on* event END
 
 // dom control START
