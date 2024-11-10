@@ -1347,7 +1347,17 @@ function getinnerhtml(element){
 			return element.innerHTML
 		}
 	}else{
-		return domgetid(element).innerHTML
+		if(domgetid(element))
+			return domgetid(element).innerHTML
+		else{
+			data=[]
+
+			domgetall(element,function(event){
+				data.push(event.innerHTML)
+			})
+
+			return data
+		}
 	}
 }
 // dom control END
