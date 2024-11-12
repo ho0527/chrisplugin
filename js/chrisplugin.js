@@ -2286,6 +2286,8 @@ function dompush(element,dom="div",data=``,setting={}){
 			createelement.href=setting["href"]
 		if(setting["title"])
 			createelement.title=setting["title"]
+		if(setting["value"])
+			createelement.value=setting["value"]
 		for(let key in dataset){
 			if(dataset.hasOwnProperty(key)){
 				createelement.dataset[key]=dataset[key]
