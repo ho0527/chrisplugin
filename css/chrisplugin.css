@@ -603,3 +603,8 @@ body[scroll]::-webkit-scrollbar-thumb{
     cursor: pointer;
     user-select: none;
 }
+
+::highlight(highlightdata) {
+    background: #fadb14;
+    color: #333;
+}

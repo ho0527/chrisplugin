@@ -94,12 +94,12 @@ function divsort(card,sortdiv,callback=function(){}){
 
 	document.querySelectorAll(sortdiv).forEach(function(event){
 		event.ondragstart=function(addeventlistenerevent){
-            if(!event.querySelector("input:focus,textarea:focus,select:focus")){
+			if(!event.querySelector("input:focus,textarea:focus,select:focus")){
 				addeventlistenerevent.target.classList.add("divsortdragging")
 				event.style.cursor="grabbing"
-            }else{
-                addeventlistenerevent.preventDefault()
-            }
+			}else{
+				addeventlistenerevent.preventDefault()
+			}
 		}
 
 		event.ondragover=function(addeventlistenerevent){
@@ -1373,77 +1373,77 @@ function href(url){
 }
 
 function dataset(element,key,value=null){
-    let elementcount=0
+	let elementcount=0
 
-    if(typeof element=="object"){
-        if(element){
-            try{
-                element.forEach(function(event){
-                    elementcount=elementcount+1
-                })
-            }catch(error){
-                if(element){
-                    elementcount=1
-                }else{
-                    console.error("[DOMNOTFOUND_ERROR]function dataset can't find given element")
-                    return null
-                }
-            }
-        }else{
-            console.error("[DOMNOTFOUND_ERROR]function dataset can't find given element")
-            return null
-        }
-    }else{
-        domgetall(element).forEach(function(event){
-            elementcount=elementcount+1
-        })
-    }
+	if(typeof element=="object"){
+		if(element){
+			try{
+				element.forEach(function(event){
+					elementcount=elementcount+1
+				})
+			}catch(error){
+				if(element){
+					elementcount=1
+				}else{
+					console.error("[DOMNOTFOUND_ERROR]function dataset can't find given element")
+					return null
+				}
+			}
+		}else{
+			console.error("[DOMNOTFOUND_ERROR]function dataset can't find given element")
+			return null
+		}
+	}else{
+		domgetall(element).forEach(function(event){
+			elementcount=elementcount+1
+		})
+	}
 
-    if(0<elementcount){
-        let data=[]
-        if(typeof element=="object"){
-            try{
-                element.forEach(function(event){
-                    if(value!=null){
-                        event.dataset[key]=value
-                    }else if(!event.dataset[key]){
-                        console.error("[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset")
-                        return null
-                    }
-                    data.push(event.dataset[key])
-                })
-            }catch(error){
-                if(value!=null){
-                    element.dataset[key]=value
-                }else if(!element.dataset[key]){
-                    console.error("[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset")
-                    return null
-                }
-                data.push(element.dataset[key])
-            }
-        }else{
-            domgetall(element).forEach(function(event){
-                if(value!=null){
-                    event.dataset[key]=value
-                }else if(!event.dataset[key]){
-                    console.error("[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset")
-                    return null
-                }
-                data.push(event.dataset[key])
-            })
-        }
-        if(data.length==0){
-            console.error("[DOMNOTFOUND_ERROR]function dataset can't find given element")
-            return null
-        }else if(data.length==1){
-            return data[0]
-        }else{
-            return data
-        }
-    }else{
-        console.error("[DOMNOTFOUND_ERROR]function dataset can't find given element")
-        return null
-    }
+	if(0<elementcount){
+		let data=[]
+		if(typeof element=="object"){
+			try{
+				element.forEach(function(event){
+					if(value!=null){
+						event.dataset[key]=value
+					}else if(!event.dataset[key]){
+						console.error("[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset")
+						return null
+					}
+					data.push(event.dataset[key])
+				})
+			}catch(error){
+				if(value!=null){
+					element.dataset[key]=value
+				}else if(!element.dataset[key]){
+					console.error("[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset")
+					return null
+				}
+				data.push(element.dataset[key])
+			}
+		}else{
+			domgetall(element).forEach(function(event){
+				if(value!=null){
+					event.dataset[key]=value
+				}else if(!event.dataset[key]){
+					console.error("[DOMDATASETNOTFOUND_ERROR]function dataset can't find given dataset")
+					return null
+				}
+				data.push(event.dataset[key])
+			})
+		}
+		if(data.length==0){
+			console.error("[DOMNOTFOUND_ERROR]function dataset can't find given element")
+			return null
+		}else if(data.length==1){
+			return data[0]
+		}else{
+			return data
+		}
+	}else{
+		console.error("[DOMNOTFOUND_ERROR]function dataset can't find given element")
+		return null
+	}
 }
 
 function getfile(){
@@ -1646,57 +1646,57 @@ async function domload(element,url,callback=function(){}){
 
 // testing
 function searchtagdiv(element,searchname,data){
-    let sys={
-        show: false,
-        search: "",
-        searchresults: [],
-        searchData: data,
-        fun: function(text) {
-            if(text === "") {
-                sys.show=false
-                document.getElementById("searchtagdiv").style.display="none"
-                return
-            }
-            const searchText=text.toLowerCase()
-            sys.searchresults=sys.searchData.filter(item =>
-                item.toLowerCase().includes(searchText)
-            )
-            sys.searchresults.sort((a,b) => {
-                return a.length - b.length
-            })
-            sys.show=sys.searchresults.length > 0
-            renderResults()
-        }
-    }
+	let sys={
+		show: false,
+		search: "",
+		searchresults: [],
+		searchData: data,
+		fun: function(text){
+			if(text === ""){
+				sys.show=false
+				document.getElementById("searchtagdiv").style.display="none"
+				return
+			}
+			const searchText=text.toLowerCase()
+			sys.searchresults=sys.searchData.filter(item =>
+				item.toLowerCase().includes(searchText)
+			)
+			sys.searchresults.sort((a,b) =>{
+				return a.length - b.length
+			})
+			sys.show=sys.searchresults.length > 0
+			renderResults()
+		}
+	}
 
-    function renderResults() {
-        document.getElementById("searchtagdiv").innerHTML=""
-        if(sys.show) {
-            sys.searchresults.forEach((item) => {
-                let div=document.createElement("div")
-                div.classList="tagdiv"
-                div.style.display="flex"
-                div.style.marginBottom="8px"
-                div.style.width="100%"
-                div.style.cursor="pointer"
-                div.innerHTML=`<div style="margin: 0; white-space: nowrap; width: 50%; font-weight: bolder;">${item}</div>`
-                div.onclick=() => {
-                    document.getElementById(searchname).value=item
-                    sys.search=item
-                    document.getElementById("searchtagdiv").style.display="none"
-                }
-                document.getElementById("searchtagdiv").appendChild(div)
-            })
-            document.getElementById("searchtagdiv").style.display="block"
-        } else {
-            document.getElementById("searchtagdiv").style.display="none"
-        }
-    }
+	function renderResults(){
+		document.getElementById("searchtagdiv").innerHTML=""
+		if(sys.show){
+			sys.searchresults.forEach((item) =>{
+				let div=document.createElement("div")
+				div.classList="tagdiv"
+				div.style.display="flex"
+				div.style.marginBottom="8px"
+				div.style.width="100%"
+				div.style.cursor="pointer"
+				div.innerHTML=`<div style="margin: 0; white-space: nowrap; width: 50%; font-weight: bolder;">${item}</div>`
+				div.onclick=() =>{
+					document.getElementById(searchname).value=item
+					sys.search=item
+					document.getElementById("searchtagdiv").style.display="none"
+				}
+				document.getElementById("searchtagdiv").appendChild(div)
+			})
+			document.getElementById("searchtagdiv").style.display="block"
+		} else{
+			document.getElementById("searchtagdiv").style.display="none"
+		}
+	}
 
-    document.getElementById(searchname).addEventListener("input",function(e) {
-        sys.search=e.target.value
-        sys.fun(sys.search)
-    })
+	document.getElementById(searchname).addEventListener("input",function(e){
+		sys.search=e.target.value
+		sys.fun(sys.search)
+	})
 
 	document.getElementById(element).innerHTML=`
 		<div class="tagdivdiv" id="searchtagdiv" style="display: none;"></div>
@@ -2312,34 +2312,34 @@ function innerhtmlreverse(dom){
 }
 
 function chash(x,type="encode",encoding="utf-8"){
-    function generaterandomstring(length){
-        let chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-        let result=""
-        for(let i=0;i<length;i=i+1){
-            let randomindex=Math.floor(Math.random()*chars.length)
-            result=result+chars[randomindex]
-        }
-        return result
-    }
+	function generaterandomstring(length){
+		let chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+		let result=""
+		for(let i=0;i<length;i=i+1){
+			let randomindex=Math.floor(Math.random()*chars.length)
+			result=result+chars[randomindex]
+		}
+		return result
+	}
 
-    function shufflestring(str){
-        let arr=str.split("")
-        for(let i=arr.length-1;i>0;i--){
-            let j=Math.floor(Math.random()*(i+1))
-            let temp=arr[i]
-            arr[i]=arr[j]
-            arr[j]=temp
-        }
-        return arr.join("")
-    }
+	function shufflestring(str){
+		let arr=str.split("")
+		for(let i=arr.length-1;i>0;i--){
+			let j=Math.floor(Math.random()*(i+1))
+			let temp=arr[i]
+			arr[i]=arr[j]
+			arr[j]=temp
+		}
+		return arr.join("")
+	}
 
-    function xorbufs(buf1,buf2){
-        let result=new Uint8Array(buf1.length)
-        for (let i=0;i<buf1.length;i++){
-            result[i]=buf1[i]^buf2[i % buf2.length]
-        }
-        return result
-    }
+	function xorbufs(buf1,buf2){
+		let result=new Uint8Array(buf1.length)
+		for (let i=0;i<buf1.length;i++){
+			result[i]=buf1[i]^buf2[i % buf2.length]
+		}
+		return result
+	}
 
 	if(type=="encode"){
 		let encoder=new TextEncoder()
@@ -2380,93 +2380,93 @@ function chash(x,type="encode",encoding="utf-8"){
 
 // 複製功能
 function copytoclipboard(element,text,callback=function(event){
-    element.value="copy!"
-    setTimeout(function(){
-        element.value="copy"
-    },1500)
+	element.value="copy!"
+	setTimeout(function(){
+		element.value="copy"
+	},1500)
 }){
-    console.log(text)
-    navigator.clipboard.writeText(text).then(function(){
-        callback(this)
-    }).catch(function(error){
-        console.error("[FUNCTION_ERROR]function copytoclipboard error: could not copy to clipboard")
-        console.error(error)
-    })
+	console.log(text)
+	navigator.clipboard.writeText(text).then(function(){
+		callback(this)
+	}).catch(function(error){
+		console.error("[FUNCTION_ERROR]function copytoclipboard error: could not copy to clipboard")
+		console.error(error)
+	})
 }
 
 // 用來移除行號的函數
 function getcleancode_onlyforcodebeautifierdontuseit(button){
-    let element=button.parentNode.parentNode.querySelector(".codebeautifier")
-    let oldinnerhtml=element.innerHTML
-    let returntext
+	let element=button.parentNode.parentNode.querySelector(".codebeautifier")
+	let oldinnerhtml=element.innerHTML
+	let returntext
 
-    element.querySelectorAll(".linenumber").forEach(function(line){
-        line.remove()
-    }) // 移除行號元素
+	element.querySelectorAll(".linenumber").forEach(function(line){
+		line.remove()
+	}) // 移除行號元素
 
-    returntext=element.innerText // 獲取去除行號的程式碼
-    element.innerHTML=oldinnerhtml // 將原本的程式碼元素內容複製到新的元素中
+	returntext=element.innerText // 獲取去除行號的程式碼
+	element.innerHTML=oldinnerhtml // 將原本的程式碼元素內容複製到新的元素中
 
-    return returntext
+	return returntext
 }
 
 function codebeautifier(code,language){
-    let keyword={
-        "javascript": ["function","return","if","else","for","while","var","let","const","document","console"],
-        "js": ["function","return","if","else","for","while","var","let","const"],
-        "python": ["def","return","if","elif","else","for","while","import","from","as"],
-        "py": ["def","return","if","elif","else","for","while","import","from","as"],
-        "html": ["html","head","body","div","span","p","a","img","script","style"]
-    }[language]||[]
-    let line=""
-    let numbercode=""
+	let keyword={
+		"javascript": ["function","return","if","else","for","while","var","let","const","document","console"],
+		"js": ["function","return","if","else","for","while","var","let","const"],
+		"python": ["def","return","if","elif","else","for","while","import","from","as"],
+		"py": ["def","return","if","elif","else","for","while","import","from","as"],
+		"html": ["html","head","body","div","span","p","a","img","script","style"]
+	}[language]||[]
+	let line=""
+	let numbercode=""
 
-    function highlight(text,classname){
-        return `<span class="${classname}">${text}</span>`
-    }
+	function highlight(text,classname){
+		return `<span class="${classname}">${text}</span>`
+	}
 
-    code=code.replace(/&/g,"&amp").replace(/</g,"&lt").replace(/>/g,"&gt")
+	code=code.replace(/&/g,"&amp").replace(/</g,"&lt").replace(/>/g,"&gt")
 
-    if(["javascript","js","python","py"].includes(language)){
-        code=code.replace(
-            new RegExp(`\\b(${keyword.join("|")})\\b|(".*?"|'.*?')|(//.*$)|(?:function\\s+(\\w+)\\s*\\(|(?:const|let|var)\\s+(\\w+)\\s*=\\s*(?:function\\s*\\(|\\([^)]*\\)\\s*=>))`,"gm"),
-            function(match,keyword,string,comment,functionname1,functionname2){
-                if(keyword){ return highlight(keyword,"keyword") }
-                if(string){ return highlight(string,"string") }
-                if(comment){ return highlight(comment,"comment") }
-                if(functionname1||functionname2){
-                    return match.replace(functionname1||functionname2,highlight(functionname1||functionname2,"function"))
-                }
-                return match
-            }
-        )
-    }else{
-        code=code.replace(
-            new RegExp(`\\b(${keyword.join("|")})\\b|(".*?"|'.*?')|(//.*$)`,"gm"),
-            function(match,keyword,string,comment){
-                if(keyword){ return highlight(keyword,"keyword") }
-                if(string){ return highlight(string,"string") }
-                if(comment){ return highlight(comment,"comment") }
-                return match
-            }
-        )
-    }
+	if(["javascript","js","python","py"].includes(language)){
+		code=code.replace(
+			new RegExp(`\\b(${keyword.join("|")})\\b|(".*?"|'.*?')|(//.*$)|(?:function\\s+(\\w+)\\s*\\(|(?:const|let|var)\\s+(\\w+)\\s*=\\s*(?:function\\s*\\(|\\([^)]*\\)\\s*=>))`,"gm"),
+			function(match,keyword,string,comment,functionname1,functionname2){
+				if(keyword){ return highlight(keyword,"keyword") }
+				if(string){ return highlight(string,"string") }
+				if(comment){ return highlight(comment,"comment") }
+				if(functionname1||functionname2){
+					return match.replace(functionname1||functionname2,highlight(functionname1||functionname2,"function"))
+				}
+				return match
+			}
+		)
+	}else{
+		code=code.replace(
+			new RegExp(`\\b(${keyword.join("|")})\\b|(".*?"|'.*?')|(//.*$)`,"gm"),
+			function(match,keyword,string,comment){
+				if(keyword){ return highlight(keyword,"keyword") }
+				if(string){ return highlight(string,"string") }
+				if(comment){ return highlight(comment,"comment") }
+				return match
+			}
+		)
+	}
 
-    line=code.split("\n")
-    numbercode=line.map(function(line,index){
-        return `<span class="linenumber">${index+1}</span>${line}`
-    }).join("\n")
+	line=code.split("\n")
+	numbercode=line.map(function(line,index){
+		return `<span class="linenumber">${index+1}</span>${line}`
+	}).join("\n")
 
-    return `
-        <div class="codebeautifiermaindiv">
-            <div style="display: flex;justify-content: space-between;align-items: center;padding: 5px;">
-                <div>${language}</div>
-                <input type="button" class="copybutton" onclick="copytoclipboard(this,getcleancode_onlyforcodebeautifierdontuseit(this))" value="copy">
-            </div>
-            <hr style="margin: 5px 0px;">
-            <pre class="codebeautifier ${language}" style="tab-size: 4"><code>${numbercode}</code></pre>
-        </div>
-    `
+	return `
+		<div class="codebeautifiermaindiv">
+			<div style="display: flex;justify-content: space-between;align-items: center;padding: 5px;">
+				<div>${language}</div>
+				<input type="button" class="copybutton" onclick="copytoclipboard(this,getcleancode_onlyforcodebeautifierdontuseit(this))" value="copy">
+			</div>
+			<hr style="margin: 5px 0px;">
+			<pre class="codebeautifier ${language}" style="tab-size: 4"><code>${numbercode}</code></pre>
+		</div>
+	`
 }
 
 function char(id,type,label,data){
@@ -2494,36 +2494,65 @@ function char(id,type,label,data){
 		paper.stroke()
 
 		// 標記X軸標籤
-		label.forEach((label,index) => {
-			const x=padding + index * xSpacing
+		label.forEach((label,index) =>{
+			const x=padding+index * xSpacing
 			const y=canvas.height - padding
 
-			paper.fillText(label,x - 20,y + 20)  // 調整位置使文字居中
+			paper.fillText(label,x - 20,y+20)  // 調整位置使文字居中
 		});
 
 		// 標記Y軸標籤
 		const ySteps=5
-		for (let i=0; i <= ySteps; i++) {
-			const yValue=yMin + (yRange / ySteps) * i
+		for (let i=0; i <= ySteps; i++){
+			const yValue=yMin+(yRange / ySteps) * i
 			const y=canvas.height - padding - (chartHeight / ySteps) * i
 
-			paper.fillText(yValue.toFixed(2),padding - 40,y + 5) // 調整位置使文字居中
+			paper.fillText(yValue.toFixed(2),padding - 40,y+5) // 調整位置使文字居中
 		}
 
 		// 繪製折線
 		paper.beginPath()
-		data.forEach((point,index) => {
-			const x=padding + index * xSpacing
+		data.forEach((point,index) =>{
+			const x=padding+index * xSpacing
 			const y=canvas.height - padding - (point - yMin) / yRange * chartHeight
 
-			if (index === 0) {
+			if (index === 0){
 				paper.moveTo(x,y)
-			} else {
+			} else{
 				paper.lineTo(x,y)
 			}
 		})
 		paper.stroke()
 	}
+}
+
+function searchhighlight(text,searchdata){// 選取元素
+	let input=domgetid(searchdata)
+	let textnode=domgetid(text).firstChild
+
+	// 監聽輸入事件
+	oninput(input,function(element,event){
+		let keyword=input.value.trim()
+
+		// 清除之前的高亮
+		CSS.highlights.clear()
+
+		if(keyword=="") return
+
+		// 找到關鍵字範圍
+		let text=textnode.textContent
+		let start=text.indexOf(keyword)
+
+		if(start!=-1){
+			let range=new Range()
+			range.setStart(textnode,start)
+			range.setEnd(textnode,start+keyword.length)
+
+			// 添加新的高亮
+			let highlight=new Highlight(range)
+			CSS.highlights.set("my-highlight",highlight)
+		}
+	})
 }
 
 // window onload START
