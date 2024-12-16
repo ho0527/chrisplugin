@@ -928,10 +928,14 @@ function on(key,element,callback=function(){},canmanyclick=false){
 			try{
 				element.forEach(function(event){
 					event.addEventListener(key,function(onevent){
-						if(!event.id||!CANTCLICKKEYLIST[event.id]){
-							CANTCLICKKEYLIST[event.id]=true
+						if(canmanyclick){
+							if(!event.id||!CANTCLICKKEYLIST[event.id]){
+								CANTCLICKKEYLIST[event.id]=true
+								callback(event,onevent)
+								CANTCLICKKEYLIST[event.id].remove()
+							}
+						}else{
 							callback(event,onevent)
-							CANTCLICKKEYLIST[event.id].remove()
 						}
 					})
 				})
@@ -941,10 +945,14 @@ function on(key,element,callback=function(){},canmanyclick=false){
 		}else{
 			try{
 				element.addEventListener(key,function(onevent){
-					if(!element.id||!CANTCLICKKEYLIST[element.id]){
-						CANTCLICKKEYLIST[element.id]=true
+					if(canmanyclick){
+						if(!element.id||!CANTCLICKKEYLIST[element.id]){
+							CANTCLICKKEYLIST[element.id]=true
+							callback(element,onevent)
+							CANTCLICKKEYLIST[element.id].remove()
+						}
+					}else{
 						callback(element,onevent)
-						CANTCLICKKEYLIST[element.id].remove()
 					}
 				})
 			}catch(error){
@@ -955,10 +963,14 @@ function on(key,element,callback=function(){},canmanyclick=false){
 		try{
 			domgetall(element,function(event){
 				event.addEventListener(key,function(onevent){
-					if(!event.id||!CANTCLICKKEYLIST[event.id]){
-						CANTCLICKKEYLIST[event.id]=true
+					if(canmanyclick){
+						if(!event.id||!CANTCLICKKEYLIST[event.id]){
+							CANTCLICKKEYLIST[event.id]=true
+							callback(event,onevent)
+							CANTCLICKKEYLIST[event.id].remove()
+						}
+					}else{
 						callback(event,onevent)
-						CANTCLICKKEYLIST[event.id].remove()
 					}
 				})
 			})
