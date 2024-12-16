@@ -932,7 +932,7 @@ function on(key,element,callback=function(){},canmanyclick=false){
 							if(!event.id||!CANTCLICKKEYLIST[event.id]){
 								CANTCLICKKEYLIST[event.id]=true
 								callback(event,onevent)
-								CANTCLICKKEYLIST[event.id].remove()
+								delete CANTCLICKKEYLIST[event.id]
 							}
 						}else{
 							callback(event,onevent)
@@ -949,7 +949,7 @@ function on(key,element,callback=function(){},canmanyclick=false){
 						if(!element.id||!CANTCLICKKEYLIST[element.id]){
 							CANTCLICKKEYLIST[element.id]=true
 							callback(element,onevent)
-							CANTCLICKKEYLIST[element.id].remove()
+							delete CANTCLICKKEYLIST[element.id]
 						}
 					}else{
 						callback(element,onevent)
@@ -967,7 +967,7 @@ function on(key,element,callback=function(){},canmanyclick=false){
 						if(!event.id||!CANTCLICKKEYLIST[event.id]){
 							CANTCLICKKEYLIST[event.id]=true
 							callback(event,onevent)
-							CANTCLICKKEYLIST[event.id].remove()
+							delete CANTCLICKKEYLIST[event.id]
 						}
 					}else{
 						callback(event,onevent)
