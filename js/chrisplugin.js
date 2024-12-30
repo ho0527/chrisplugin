@@ -233,11 +233,7 @@ function weblsset(data,value){
 	if(value==null){
 		return localStorage.removeItem(data)
 	}else{
-		if(typeof value=="object"||typeof value=="array"){
-			return localStorage.setItem(data,JSON.stringify(value))
-		}else{
-			return localStorage.setItem(data,value)
-		}
+		return localStorage.setItem(data,str(value))
 	}
 }
 
