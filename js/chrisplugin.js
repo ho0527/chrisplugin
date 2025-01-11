@@ -754,8 +754,8 @@ function signin(
 }
 
 function smoothscroll(id){
-	if(document.getElementById(id)){
-		document.getElementById(id).scrollIntoView({ behavior: "smooth" })
+	if(domgetid(id)){
+		domgetid(id).scrollIntoView({ behavior: "smooth" })
 	}else{
 		conlog("[ERROR]function smoothscroll id not found","red","12")
 	}
@@ -1224,7 +1224,7 @@ function innerhtml(element,text,keep=true){
 			return element.innerHTML
 		}
 	}else{
-		data=[]
+		let data=[]
 
 		domgetall(element,function(event){
 			if(keep){
@@ -1353,7 +1353,7 @@ function getvalue(element){
 		if(domgetid(element))
 			return domgetid(element).value
 		else{
-			data=[]
+			let data=[]
 
 			domgetall(element,function(event){
 				data.push(event.value)
@@ -2596,8 +2596,8 @@ onload(window,function(){
 	}
 
 	// 順滑移動#
-	if(location.href.split("#").length>1){
-		let id=location.href.split("#")[location.href.split("#").length-1]
+	if(location.hash){
+		let id=location.hash.slice(1,)
 		if(document.getElementById(id)){
 			document.getElementById(id).scrollIntoView({ behavior: "smooth" })
 		}
