@@ -1657,43 +1657,22 @@ async function importhtml(element,url,callback=function(){}){
 	callback()
 }
 
-async function domload(element, url, callback=function(){}){
-    let data=await fetch(url)
-    let text=await data.text()
+async function domload(element,url,callback=function(){}){
+	let response=await fetch(url)
+	let htmlText=await response.text()
+	let parser=new DOMParser()
+	let doc=parser.parseFromString(htmlText,"text/html")
+	domgetall(element).forEach(function(event){
+	  	event.innerHTML=doc.documentElement.innerHTML
+		event.querySelectorAll('script').forEach(script => {
+			let newScript=document.createElement('script')
+			newScript.textContent=script.textContent
+			event.appendChild(newScript)
+		})
+	})
 
-    // 建立臨時容器解析模板
-    let tempDiv=document.createElement("div")
-    tempDiv.innerHTML=text
-
-    // 分離非 script 的內容
-    let content=tempDiv.cloneNode(true)
-    let scripts=content.querySelectorAll("script")
-    for(let i=0;i<scripts.length;i=i+1){
-        scripts[i].remove()
-    }
-
-    // 比對 DOM 並更新
-    let targets=domgetall(element)
-    for(let i=0;i<targets.length;i=i+1){
-        let event=targets[i]
-
-        // 僅更新有差異的內容
-        if(event.innerHTML !== content.innerHTML){
-            event.innerHTML=content.innerHTML
-        }
-
-        // 插入腳本
-        for(let j=0;j<scripts.length;j=j+1){
-            let newscript=document.createElement("script")
-            newscript.textContent=scripts[j].textContent
-            event.appendChild(newscript)
-        }
-    }
-
-    // 執行回調
-    if(callback){
-        callback()
-    }
+	if(callback)
+		callback()
 }
 
 // testing
