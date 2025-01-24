@@ -924,7 +924,7 @@ function on(key,element,callback=function(){},canmanyclick=false){
 			try{
 				element.forEach(function(event){
 					event.addEventListener(key,function(onevent){
-						if(canmanyclick){
+						if(!canmanyclick){
 							if(!event.id||!CANTCLICKKEYLIST[event.id]){
 								CANTCLICKKEYLIST[event.id]=true
 								callback(event,onevent)
@@ -941,7 +941,7 @@ function on(key,element,callback=function(){},canmanyclick=false){
 		}else{
 			try{
 				element.addEventListener(key,function(onevent){
-					if(canmanyclick){
+					if(!canmanyclick){
 						if(!element.id||!CANTCLICKKEYLIST[element.id]){
 							CANTCLICKKEYLIST[element.id]=true
 							callback(element,onevent)
@@ -959,7 +959,7 @@ function on(key,element,callback=function(){},canmanyclick=false){
 		try{
 			domgetall(element,function(event){
 				event.addEventListener(key,function(onevent){
-					if(canmanyclick){
+					if(!canmanyclick){
 						if(!event.id||!CANTCLICKKEYLIST[event.id]){
 							CANTCLICKKEYLIST[event.id]=true
 							callback(event,onevent)
