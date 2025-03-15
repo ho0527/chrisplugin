@@ -15,7 +15,7 @@
     |-------    -----    -     -    -          -     -----         -----  -------|
 */
 
-.macossectiondiv{
+/* .macossectiondiv{
     overflow: auto;
 }
 
@@ -73,7 +73,7 @@ body[scroll]::-webkit-scrollbar-thumb{
     background-clip: content-box;
     background: var(--stgray-400);
     border-radius: 1000px;
-}
+} */
 
 .divsortdragging{
     opacity: 0.5;
