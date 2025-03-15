@@ -41,6 +41,9 @@ const MINFLOAT=-9999999999.9999999999
 const CANTCLICKKEYLIST={}
 
 function startmacossection(){
+	console.error("function [startmacossection] is deprecation pls dont use any more")
+	return
+
 	let macostimer
 	setInterval(function(){
 		docget("qtor","body").onscroll=function(){
