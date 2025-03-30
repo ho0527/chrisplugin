@@ -41,11 +41,7 @@ const MINFLOAT=-9999999999.9999999999
 const CANTCLICKKEYLIST={}
 
 function startmacossection(){
-<<<<<<< HEAD
 	console.error("function [startmacossection] is deprecation pls dont use any more")
-=======
-	throw "this function is deprecation pls dont use any more"
->>>>>>> origin/main
 	return
 
 	let macostimer
