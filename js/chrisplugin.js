@@ -928,10 +928,10 @@ function on(key,element,callback=function(){},canmanyclick=false){
 				element.forEach(function(event){
 					event.addEventListener(key,function(onevent){
 						if(!canmanyclick){
-							if(!event.id||!CANTCLICKKEYLIST[event.id]){
-								CANTCLICKKEYLIST[event.id]=true
+							if(!dataset(element,"cantclick")=="true"){
+								dataset(event,"cantclick","true")
 								callback(event,onevent)
-								delete CANTCLICKKEYLIST[event.id]
+								dataset(event,"cantclick","false")
 							}
 						}else{
 							callback(event,onevent)
@@ -945,10 +945,10 @@ function on(key,element,callback=function(){},canmanyclick=false){
 			try{
 				element.addEventListener(key,function(onevent){
 					if(!canmanyclick){
-						if(!element.id||!CANTCLICKKEYLIST[element.id]){
-							CANTCLICKKEYLIST[element.id]=true
+						if(!dataset(element,"cantclick")=="true"){
+							dataset(element,"cantclick","true")
 							callback(element,onevent)
-							delete CANTCLICKKEYLIST[element.id]
+							dataset(element,"cantclick","false")
 						}
 					}else{
 						callback(element,onevent)
@@ -963,10 +963,10 @@ function on(key,element,callback=function(){},canmanyclick=false){
 			domgetall(element,function(event){
 				event.addEventListener(key,function(onevent){
 					if(!canmanyclick){
-						if(!event.id||!CANTCLICKKEYLIST[event.id]){
-							CANTCLICKKEYLIST[event.id]=true
+						if(!dataset(element,"cantclick")=="true"){
+							dataset(event,"cantclick","true")
 							callback(event,onevent)
-							delete CANTCLICKKEYLIST[event.id]
+							dataset(event,"cantclick","false")
 						}
 					}else{
 						callback(event,onevent)
