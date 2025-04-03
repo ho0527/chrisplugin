@@ -928,7 +928,7 @@ function on(key,element,callback=function(){},canmanyclick=false){
 				element.forEach(function(event){
 					event.addEventListener(key,function(onevent){
 						if(!canmanyclick){
-							if(!dataset(element,"cantclick")=="true"){
+							if(!dataset(event,"cantclick")||dataset(event,"cantclick")!="true"){
 								dataset(event,"cantclick","true")
 								callback(event,onevent)
 								dataset(event,"cantclick","false")
@@ -945,7 +945,7 @@ function on(key,element,callback=function(){},canmanyclick=false){
 			try{
 				element.addEventListener(key,function(onevent){
 					if(!canmanyclick){
-						if(!dataset(element,"cantclick")=="true"){
+						if(!dataset(element,"cantclick")||dataset(element,"cantclick")!="true"){
 							dataset(element,"cantclick","true")
 							callback(element,onevent)
 							dataset(element,"cantclick","false")
@@ -963,7 +963,7 @@ function on(key,element,callback=function(){},canmanyclick=false){
 			domgetall(element,function(event){
 				event.addEventListener(key,function(onevent){
 					if(!canmanyclick){
-						if(!dataset(element,"cantclick")=="true"){
+						if(!dataset(event,"cantclick")||dataset(event,"cantclick")!="true"){
 							dataset(event,"cantclick","true")
 							callback(event,onevent)
 							dataset(event,"cantclick","false")
