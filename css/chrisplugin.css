@@ -75,6 +75,10 @@ body[scroll]::-webkit-scrollbar-thumb{
     border-radius: 1000px;
 } */
 
+.macossectiondivy{
+	overflow: hidden auto;
+}
+
 .divsortdragging{
     opacity: 0.5;
 }
