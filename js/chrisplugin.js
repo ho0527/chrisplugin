@@ -921,13 +921,18 @@ function passwordshowhide(url="/",id="passwordicon"){
 // --- 自用函式 ---
 
 // on* event START
-function on(key,element,callback=function(){},canmanyclick=false){
+function on(key,element,callback=function(){},canmanyclick=false,clickone=false){
 	if(typeof element=="object"){
 		if(element.length){
 			try{
 				element.forEach(function(event){
 					event.addEventListener(key,function(onevent){
-						if(!canmanyclick){
+						if(!clickone){
+							if(!dataset(event,"cantclick")||dataset(event,"cantclick")!="true"){
+								dataset(event,"cantclick","true")
+								callback(event,onevent)
+							}
+						}else if(!canmanyclick){
 							if(!dataset(event,"cantclick")||dataset(event,"cantclick")!="true"){
 								dataset(event,"cantclick","true")
 								callback(event,onevent)
@@ -944,7 +949,12 @@ function on(key,element,callback=function(){},canmanyclick=false){
 		}else{
 			try{
 				element.addEventListener(key,function(onevent){
-					if(!canmanyclick){
+					if(!clickone){
+						if(!dataset(element,"cantclick")||dataset(element,"cantclick")!="true"){
+							dataset(element,"cantclick","true")
+							callback(element,onevent)
+						}
+					}else if(!canmanyclick){
 						if(!dataset(element,"cantclick")||dataset(element,"cantclick")!="true"){
 							dataset(element,"cantclick","true")
 							callback(element,onevent)
@@ -962,7 +972,12 @@ function on(key,element,callback=function(){},canmanyclick=false){
 		try{
 			domgetall(element,function(event){
 				event.addEventListener(key,function(onevent){
-					if(!canmanyclick){
+					if(!clickone){
+						if(!dataset(event,"cantclick")||dataset(event,"cantclick")!="true"){
+							dataset(event,"cantclick","true")
+							callback(event,onevent)
+						}
+					}else if(!canmanyclick){
 						if(!dataset(event,"cantclick")||dataset(event,"cantclick")!="true"){
 							dataset(event,"cantclick","true")
 							callback(event,onevent)
@@ -1055,110 +1070,110 @@ function onenterkeydown(element,callback=function(){}){
 	}
 }
 
-function onabort(element,callback=function(){},canmanyclick=false){ on("abort",element,callback,canmanyclick) }
-function onactivate(element,callback=function(){},canmanyclick=false){ on("activate",element,callback,canmanyclick) }
-function onaddtrack(element,callback=function(){},canmanyclick=false){ on("addtrack",element,callback,canmanyclick) }
-function onafterprint(element,callback=function(){},canmanyclick=false){ on("afterprint",element,callback,canmanyclick) }
-function onanimationcancel(element,callback=function(){},canmanyclick=false){ on("animationcancel",element,callback,canmanyclick) }
-function onanimationend(element,callback=function(){},canmanyclick=false){ on("animationend",element,callback,canmanyclick) }
-function onanimationiteration(element,callback=function(){},canmanyclick=false){ on("animationiteration",element,callback,canmanyclick) }
-function onanimationstart(element,callback=function(){},canmanyclick=false){ on("animationstart",element,callback,canmanyclick) }
-function onappinstalled(element,callback=function(){},canmanyclick=false){ on("appinstalled",element,callback,canmanyclick) }
-function onauxclick(element,callback=function(){},canmanyclick=false){ on("auxclick",element,callback,canmanyclick) }
-function onbeforeinput(element,callback=function(){},canmanyclick=false){ on("beforeinput",element,callback,canmanyclick) }
-function onbeforeprint(element,callback=function(){},canmanyclick=false){ on("beforeprint",element,callback,canmanyclick) }
-function onbeforeunload(element,callback=function(){},canmanyclick=false){ on("beforeunload",element,callback,canmanyclick) }
-function onblur(element,callback=function(){},canmanyclick=false){ on("blur",element,callback,canmanyclick) }
-function oncancel(element,callback=function(){},canmanyclick=false){ on("cancel",element,callback,canmanyclick) }
-function oncanplay(element,callback=function(){},canmanyclick=false){ on("canplay",element,callback,canmanyclick) }
-function oncanplaythrough(element,callback=function(){},canmanyclick=false){ on("canplaythrough",element,callback,canmanyclick) }
-function onchange(element,callback=function(){},canmanyclick=false){ on("change",element,callback,canmanyclick) }
-function onclick(element,callback=function(){},canmanyclick=false){ on("click",element,callback,canmanyclick,canmanyclick) }
-function onclose(element,callback=function(){},canmanyclick=false){ on("close",element,callback,canmanyclick) }
-function oncompositionend(element,callback=function(){},canmanyclick=false){ on("compositionend",element,callback,canmanyclick) }
-function oncompositionstart(element,callback=function(){},canmanyclick=false){ on("compositionstart",element,callback,canmanyclick) }
-function oncompositionupdate(element,callback=function(){},canmanyclick=false){ on("compositionupdate",element,callback,canmanyclick) }
-function oncontextmenu(element,callback=function(){},canmanyclick=false){ on("contextmenu",element,callback,canmanyclick) }
-function oncuechange(element,callback=function(){},canmanyclick=false){ on("cuechange",element,callback,canmanyclick) }
-function oncut(element,callback=function(){},canmanyclick=false){ on("cut",element,callback,canmanyclick) }
-function ondblclick(element,callback=function(){},canmanyclick=false){ on("dblclick",element,callback,canmanyclick) }
-function ondevicechange(element,callback=function(){},canmanyclick=false){ on("devicechange",element,callback,canmanyclick) }
-function ondevicemotion(element,callback=function(){},canmanyclick=false){ on("devicemotion",element,callback,canmanyclick) }
-function ondeviceorientation(element,callback=function(){},canmanyclick=false){ on("deviceorientation",element,callback,canmanyclick) }
-function ondrag(element,callback=function(){},canmanyclick=false){ on("drag",element,callback,canmanyclick) }
-function ondragend(element,callback=function(){},canmanyclick=false){ on("dragend",element,callback,canmanyclick) }
-function ondragenter(element,callback=function(){},canmanyclick=false){ on("dragenter",element,callback,canmanyclick) }
-function ondragleave(element,callback=function(){},canmanyclick=false){ on("dragleave",element,callback,canmanyclick) }
-function ondragover(element,callback=function(){},canmanyclick=false){ on("dragover",element,callback,canmanyclick) }
-function ondragstart(element,callback=function(){},canmanyclick=false){ on("dragstart",element,callback,canmanyclick) }
-function ondrop(element,callback=function(){},canmanyclick=false){ on("drop",element,callback,canmanyclick) }
-function ondurationchange(element,callback=function(){},canmanyclick=false){ on("durationchange",element,callback,canmanyclick) }
-function onended(element,callback=function(){},canmanyclick=false){ on("ended",element,callback,canmanyclick) }
-function onerror(element,callback=function(){},canmanyclick=false){ on("error",element,callback,canmanyclick) }
-function onfocus(element,callback=function(){},canmanyclick=false){ on("focus",element,callback,canmanyclick) }
-function onfullscreenchange(element,callback=function(){},canmanyclick=false){ on("fullscreenchange",element,callback,canmanyclick) }
-function onfullscreenerror(element,callback=function(){},canmanyclick=false){ on("fullscreenerror",element,callback,canmanyclick) }
-function ongamepadconnected(element,callback=function(){},canmanyclick=false){ on("gamepadconnected",element,callback,canmanyclick) }
-function ongamepaddisconnected(element,callback=function(){},canmanyclick=false){ on("gamepaddisconnected",element,callback,canmanyclick) }
-function onhashchange(element,callback=function(){},canmanyclick=false){ on("hashchange",element,callback,canmanyclick) }
-function onicecandidate(element,callback=function(){},canmanyclick=false){ on("icecandidate",element,callback,canmanyclick) }
-function oniceconnectionstatechange(element,callback=function(){},canmanyclick=false){ on("iceconnectionstatechange",element,callback,canmanyclick) }
-function oninput(element,callback=function(){},canmanyclick=false){ on("input",element,callback,canmanyclick) }
-function onkeydown(element,callback=function(){},canmanyclick=false){ on("keydown",element,callback,canmanyclick) }
-function onkeypress(element,callback=function(){},canmanyclick=false){ on("keypress",element,callback,canmanyclick) }
-function onkeyup(element,callback=function(){},canmanyclick=false){ on("keyup",element,callback,canmanyclick) }
-function onlanguagechange(element,callback=function(){},canmanyclick=false){ on("languagechange",element,callback,canmanyclick) }
-function onload(element,callback=function(){},canmanyclick=false){ on("load",element,callback,canmanyclick) }
-function onloadeddata(element,callback=function(){},canmanyclick=false){ on("loadeddata",element,callback,canmanyclick) }
-function onloadedmetadata(element,callback=function(){},canmanyclick=false){ on("loadedmetadata",element,callback,canmanyclick) }
-function onloadstart(element,callback=function(){},canmanyclick=false){ on("loadstart",element,callback,canmanyclick) }
-function onmessage(element,callback=function(){},canmanyclick=false){ on("message",element,callback,canmanyclick) }
-function onmousedown(element,callback=function(){},canmanyclick=false){ on("mousedown",element,callback,canmanyclick) }
-function onmouseenter(element,callback=function(){},canmanyclick=false){ on("mouseenter",element,callback,canmanyclick) }
-function onmouseleave(element,callback=function(){},canmanyclick=false){ on("mouseleave",element,callback,canmanyclick) }
-function onmousemove(element,callback=function(){},canmanyclick=false){ on("mousemove",element,callback,canmanyclick) }
-function onmouseout(element,callback=function(){},canmanyclick=false){ on("mouseout",element,callback,canmanyclick) }
-function onmouseover(element,callback=function(){},canmanyclick=false){ on("mouseover",element,callback,canmanyclick) }
-function onmouseup(element,callback=function(){},canmanyclick=false){ on("mouseup",element,callback,canmanyclick) }
-function onpause(element,callback=function(){},canmanyclick=false){ on("pause",element,callback,canmanyclick) }
-function onplay(element,callback=function(){},canmanyclick=false){ on("play",element,callback,canmanyclick) }
-function onplaying(element,callback=function(){},canmanyclick=false){ on("playing",element,callback,canmanyclick) }
-function onpointercancel(element,callback=function(){},canmanyclick=false){ on("pointercancel",element,callback,canmanyclick) }
-function onpointerdown(element,callback=function(){},canmanyclick=false){ on("pointerdown",element,callback,canmanyclick) }
-function onpointerenter(element,callback=function(){},canmanyclick=false){ on("pointerenter",element,callback,canmanyclick) }
-function onpointerleave(element,callback=function(){},canmanyclick=false){ on("pointerleave",element,callback,canmanyclick) }
-function onpointermove(element,callback=function(){},canmanyclick=false){ on("pointermove",element,callback,canmanyclick) }
-function onpointerout(element,callback=function(){},canmanyclick=false){ on("pointerout",element,callback,canmanyclick) }
-function onpointerover(element,callback=function(){},canmanyclick=false){ on("pointerover",element,callback,canmanyclick) }
-function onpointerup(element,callback=function(){},canmanyclick=false){ on("pointerup",element,callback,canmanyclick) }
-function onpopstate(element,callback=function(){},canmanyclick=false){ on("popstate",element,callback,canmanyclick) }
-function onprogress(element,callback=function(){},canmanyclick=false){ on("progress",element,callback,canmanyclick) }
-function onratechange(element,callback=function(){},canmanyclick=false){ on("ratechange",element,callback,canmanyclick) }
-function onreadystatechange(element,callback=function(){},canmanyclick=false){ on("readystatechange",element,callback,canmanyclick) }
-function onreset(element,callback=function(){},canmanyclick=false){ on("reset",element,callback,canmanyclick) }
-function onresize(element,callback=function(){},canmanyclick=false){ on("resize",element,callback,canmanyclick) }
-function onscroll(element,callback=function(){},canmanyclick=false){ on("scroll",element,callback,canmanyclick) }
-function onsearch(element,callback=function(){},canmanyclick=false){ on("search",element,callback,canmanyclick) }
-function onseeked(element,callback=function(){},canmanyclick=false){ on("seeked",element,callback,canmanyclick) }
-function onseeking(element,callback=function(){},canmanyclick=false){ on("seeking",element,callback,canmanyclick) }
-function onselect(element,callback=function(){},canmanyclick=false){ on("select",element,callback,canmanyclick) }
-function onselectionchange(element,callback=function(){},canmanyclick=false){ on("selectionchange",element,callback,canmanyclick) }
-function onsubmit(element,callback=function(){},canmanyclick=false){ on("submit",element,callback,canmanyclick) }
-function onsuspend(element,callback=function(){},canmanyclick=false){ on("suspend",element,callback,canmanyclick) }
-function ontimeout(element,callback=function(){},canmanyclick=false){ on("timeout",element,callback,canmanyclick) }
-function ontimeupdate(element,callback=function(){},canmanyclick=false){ on("timeupdate",element,callback,canmanyclick) }
-function ontouchcancel(element,callback=function(){},canmanyclick=false){ on("touchcancel",element,callback,canmanyclick) }
-function ontouchend(element,callback=function(){},canmanyclick=false){ on("touchend",element,callback,canmanyclick) }
-function ontouchmove(element,callback=function(){},canmanyclick=false){ on("touchmove",element,callback,canmanyclick) }
-function ontouchstart(element,callback=function(){},canmanyclick=false){ on("touchstart",element,callback,canmanyclick) }
-function ontransitioncancel(element,callback=function(){},canmanyclick=false){ on("transitioncancel",element,callback,canmanyclick) }
-function ontransitionend(element,callback=function(){},canmanyclick=false){ on("transitionend",element,callback,canmanyclick) }
-function ontransitionstart(element,callback=function(){},canmanyclick=false){ on("transitionstart",element,callback,canmanyclick) }
-function onunhandledrejection(element,callback=function(){},canmanyclick=false){ on("unhandledrejection",element,callback,canmanyclick) }
-function onunload(element,callback=function(){},canmanyclick=false){ on("unload",element,callback,canmanyclick) }
-function onvolumechange(element,callback=function(){},canmanyclick=false){ on("volumechange",element,callback,canmanyclick) }
-function onwaiting(element,callback=function(){},canmanyclick=false){ on("waiting",element,callback,canmanyclick) }
-function onwheel(element,callback=function(){},canmanyclick=false){ on("wheel",element,callback,canmanyclick) }
+function onabort(element,callback=function(){},canmanyclick=false,clickone=false){ on("abort",element,callback,canmanyclick,clickone) }
+function onactivate(element,callback=function(){},canmanyclick=false,clickone=false){ on("activate",element,callback,canmanyclick,clickone) }
+function onaddtrack(element,callback=function(){},canmanyclick=false,clickone=false){ on("addtrack",element,callback,canmanyclick,clickone) }
+function onafterprint(element,callback=function(){},canmanyclick=false,clickone=false){ on("afterprint",element,callback,canmanyclick,clickone) }
+function onanimationcancel(element,callback=function(){},canmanyclick=false,clickone=false){ on("animationcancel",element,callback,canmanyclick,clickone) }
+function onanimationend(element,callback=function(){},canmanyclick=false,clickone=false){ on("animationend",element,callback,canmanyclick,clickone) }
+function onanimationiteration(element,callback=function(){},canmanyclick=false,clickone=false){ on("animationiteration",element,callback,canmanyclick,clickone) }
+function onanimationstart(element,callback=function(){},canmanyclick=false,clickone=false){ on("animationstart",element,callback,canmanyclick,clickone) }
+function onappinstalled(element,callback=function(){},canmanyclick=false,clickone=false){ on("appinstalled",element,callback,canmanyclick,clickone) }
+function onauxclick(element,callback=function(){},canmanyclick=false,clickone=false){ on("auxclick",element,callback,canmanyclick,clickone) }
+function onbeforeinput(element,callback=function(){},canmanyclick=false,clickone=false){ on("beforeinput",element,callback,canmanyclick,clickone) }
+function onbeforeprint(element,callback=function(){},canmanyclick=false,clickone=false){ on("beforeprint",element,callback,canmanyclick,clickone) }
+function onbeforeunload(element,callback=function(){},canmanyclick=false,clickone=false){ on("beforeunload",element,callback,canmanyclick,clickone) }
+function onblur(element,callback=function(){},canmanyclick=false,clickone=false){ on("blur",element,callback,canmanyclick,clickone) }
+function oncancel(element,callback=function(){},canmanyclick=false,clickone=false){ on("cancel",element,callback,canmanyclick,clickone) }
+function oncanplay(element,callback=function(){},canmanyclick=false,clickone=false){ on("canplay",element,callback,canmanyclick,clickone) }
+function oncanplaythrough(element,callback=function(){},canmanyclick=false,clickone=false){ on("canplaythrough",element,callback,canmanyclick,clickone) }
+function onchange(element,callback=function(){},canmanyclick=false,clickone=false){ on("change",element,callback,canmanyclick,clickone) }
+function onclick(element,callback=function(){},canmanyclick=false,clickone=false){ on("click",element,callback,canmanyclick,canmanyclick,clickone) }
+function onclose(element,callback=function(){},canmanyclick=false,clickone=false){ on("close",element,callback,canmanyclick,clickone) }
+function oncompositionend(element,callback=function(){},canmanyclick=false,clickone=false){ on("compositionend",element,callback,canmanyclick,clickone) }
+function oncompositionstart(element,callback=function(){},canmanyclick=false,clickone=false){ on("compositionstart",element,callback,canmanyclick,clickone) }
+function oncompositionupdate(element,callback=function(){},canmanyclick=false,clickone=false){ on("compositionupdate",element,callback,canmanyclick,clickone) }
+function oncontextmenu(element,callback=function(){},canmanyclick=false,clickone=false){ on("contextmenu",element,callback,canmanyclick,clickone) }
+function oncuechange(element,callback=function(){},canmanyclick=false,clickone=false){ on("cuechange",element,callback,canmanyclick,clickone) }
+function oncut(element,callback=function(){},canmanyclick=false,clickone=false){ on("cut",element,callback,canmanyclick,clickone) }
+function ondblclick(element,callback=function(){},canmanyclick=false,clickone=false){ on("dblclick",element,callback,canmanyclick,clickone) }
+function ondevicechange(element,callback=function(){},canmanyclick=false,clickone=false){ on("devicechange",element,callback,canmanyclick,clickone) }
+function ondevicemotion(element,callback=function(){},canmanyclick=false,clickone=false){ on("devicemotion",element,callback,canmanyclick,clickone) }
+function ondeviceorientation(element,callback=function(){},canmanyclick=false,clickone=false){ on("deviceorientation",element,callback,canmanyclick,clickone) }
+function ondrag(element,callback=function(){},canmanyclick=false,clickone=false){ on("drag",element,callback,canmanyclick,clickone) }
+function ondragend(element,callback=function(){},canmanyclick=false,clickone=false){ on("dragend",element,callback,canmanyclick,clickone) }
+function ondragenter(element,callback=function(){},canmanyclick=false,clickone=false){ on("dragenter",element,callback,canmanyclick,clickone) }
+function ondragleave(element,callback=function(){},canmanyclick=false,clickone=false){ on("dragleave",element,callback,canmanyclick,clickone) }
+function ondragover(element,callback=function(){},canmanyclick=false,clickone=false){ on("dragover",element,callback,canmanyclick,clickone) }
+function ondragstart(element,callback=function(){},canmanyclick=false,clickone=false){ on("dragstart",element,callback,canmanyclick,clickone) }
+function ondrop(element,callback=function(){},canmanyclick=false,clickone=false){ on("drop",element,callback,canmanyclick,clickone) }
+function ondurationchange(element,callback=function(){},canmanyclick=false,clickone=false){ on("durationchange",element,callback,canmanyclick,clickone) }
+function onended(element,callback=function(){},canmanyclick=false,clickone=false){ on("ended",element,callback,canmanyclick,clickone) }
+function onerror(element,callback=function(){},canmanyclick=false,clickone=false){ on("error",element,callback,canmanyclick,clickone) }
+function onfocus(element,callback=function(){},canmanyclick=false,clickone=false){ on("focus",element,callback,canmanyclick,clickone) }
+function onfullscreenchange(element,callback=function(){},canmanyclick=false,clickone=false){ on("fullscreenchange",element,callback,canmanyclick,clickone) }
+function onfullscreenerror(element,callback=function(){},canmanyclick=false,clickone=false){ on("fullscreenerror",element,callback,canmanyclick,clickone) }
+function ongamepadconnected(element,callback=function(){},canmanyclick=false,clickone=false){ on("gamepadconnected",element,callback,canmanyclick,clickone) }
+function ongamepaddisconnected(element,callback=function(){},canmanyclick=false,clickone=false){ on("gamepaddisconnected",element,callback,canmanyclick,clickone) }
+function onhashchange(element,callback=function(){},canmanyclick=false,clickone=false){ on("hashchange",element,callback,canmanyclick,clickone) }
+function onicecandidate(element,callback=function(){},canmanyclick=false,clickone=false){ on("icecandidate",element,callback,canmanyclick,clickone) }
+function oniceconnectionstatechange(element,callback=function(){},canmanyclick=false,clickone=false){ on("iceconnectionstatechange",element,callback,canmanyclick,clickone) }
+function oninput(element,callback=function(){},canmanyclick=false,clickone=false){ on("input",element,callback,canmanyclick,clickone) }
+function onkeydown(element,callback=function(){},canmanyclick=false,clickone=false){ on("keydown",element,callback,canmanyclick,clickone) }
+function onkeypress(element,callback=function(){},canmanyclick=false,clickone=false){ on("keypress",element,callback,canmanyclick,clickone) }
+function onkeyup(element,callback=function(){},canmanyclick=false,clickone=false){ on("keyup",element,callback,canmanyclick,clickone) }
+function onlanguagechange(element,callback=function(){},canmanyclick=false,clickone=false){ on("languagechange",element,callback,canmanyclick,clickone) }
+function onload(element,callback=function(){},canmanyclick=false,clickone=false){ on("load",element,callback,canmanyclick,clickone) }
+function onloadeddata(element,callback=function(){},canmanyclick=false,clickone=false){ on("loadeddata",element,callback,canmanyclick,clickone) }
+function onloadedmetadata(element,callback=function(){},canmanyclick=false,clickone=false){ on("loadedmetadata",element,callback,canmanyclick,clickone) }
+function onloadstart(element,callback=function(){},canmanyclick=false,clickone=false){ on("loadstart",element,callback,canmanyclick,clickone) }
+function onmessage(element,callback=function(){},canmanyclick=false,clickone=false){ on("message",element,callback,canmanyclick,clickone) }
+function onmousedown(element,callback=function(){},canmanyclick=false,clickone=false){ on("mousedown",element,callback,canmanyclick,clickone) }
+function onmouseenter(element,callback=function(){},canmanyclick=false,clickone=false){ on("mouseenter",element,callback,canmanyclick,clickone) }
+function onmouseleave(element,callback=function(){},canmanyclick=false,clickone=false){ on("mouseleave",element,callback,canmanyclick,clickone) }
+function onmousemove(element,callback=function(){},canmanyclick=false,clickone=false){ on("mousemove",element,callback,canmanyclick,clickone) }
+function onmouseout(element,callback=function(){},canmanyclick=false,clickone=false){ on("mouseout",element,callback,canmanyclick,clickone) }
+function onmouseover(element,callback=function(){},canmanyclick=false,clickone=false){ on("mouseover",element,callback,canmanyclick,clickone) }
+function onmouseup(element,callback=function(){},canmanyclick=false,clickone=false){ on("mouseup",element,callback,canmanyclick,clickone) }
+function onpause(element,callback=function(){},canmanyclick=false,clickone=false){ on("pause",element,callback,canmanyclick,clickone) }
+function onplay(element,callback=function(){},canmanyclick=false,clickone=false){ on("play",element,callback,canmanyclick,clickone) }
+function onplaying(element,callback=function(){},canmanyclick=false,clickone=false){ on("playing",element,callback,canmanyclick,clickone) }
+function onpointercancel(element,callback=function(){},canmanyclick=false,clickone=false){ on("pointercancel",element,callback,canmanyclick,clickone) }
+function onpointerdown(element,callback=function(){},canmanyclick=false,clickone=false){ on("pointerdown",element,callback,canmanyclick,clickone) }
+function onpointerenter(element,callback=function(){},canmanyclick=false,clickone=false){ on("pointerenter",element,callback,canmanyclick,clickone) }
+function onpointerleave(element,callback=function(){},canmanyclick=false,clickone=false){ on("pointerleave",element,callback,canmanyclick,clickone) }
+function onpointermove(element,callback=function(){},canmanyclick=false,clickone=false){ on("pointermove",element,callback,canmanyclick,clickone) }
+function onpointerout(element,callback=function(){},canmanyclick=false,clickone=false){ on("pointerout",element,callback,canmanyclick,clickone) }
+function onpointerover(element,callback=function(){},canmanyclick=false,clickone=false){ on("pointerover",element,callback,canmanyclick,clickone) }
+function onpointerup(element,callback=function(){},canmanyclick=false,clickone=false){ on("pointerup",element,callback,canmanyclick,clickone) }
+function onpopstate(element,callback=function(){},canmanyclick=false,clickone=false){ on("popstate",element,callback,canmanyclick,clickone) }
+function onprogress(element,callback=function(){},canmanyclick=false,clickone=false){ on("progress",element,callback,canmanyclick,clickone) }
+function onratechange(element,callback=function(){},canmanyclick=false,clickone=false){ on("ratechange",element,callback,canmanyclick,clickone) }
+function onreadystatechange(element,callback=function(){},canmanyclick=false,clickone=false){ on("readystatechange",element,callback,canmanyclick,clickone) }
+function onreset(element,callback=function(){},canmanyclick=false,clickone=false){ on("reset",element,callback,canmanyclick,clickone) }
+function onresize(element,callback=function(){},canmanyclick=false,clickone=false){ on("resize",element,callback,canmanyclick,clickone) }
+function onscroll(element,callback=function(){},canmanyclick=false,clickone=false){ on("scroll",element,callback,canmanyclick,clickone) }
+function onsearch(element,callback=function(){},canmanyclick=false,clickone=false){ on("search",element,callback,canmanyclick,clickone) }
+function onseeked(element,callback=function(){},canmanyclick=false,clickone=false){ on("seeked",element,callback,canmanyclick,clickone) }
+function onseeking(element,callback=function(){},canmanyclick=false,clickone=false){ on("seeking",element,callback,canmanyclick,clickone) }
+function onselect(element,callback=function(){},canmanyclick=false,clickone=false){ on("select",element,callback,canmanyclick,clickone) }
+function onselectionchange(element,callback=function(){},canmanyclick=false,clickone=false){ on("selectionchange",element,callback,canmanyclick,clickone) }
+function onsubmit(element,callback=function(){},canmanyclick=false,clickone=false){ on("submit",element,callback,canmanyclick,clickone) }
+function onsuspend(element,callback=function(){},canmanyclick=false,clickone=false){ on("suspend",element,callback,canmanyclick,clickone) }
+function ontimeout(element,callback=function(){},canmanyclick=false,clickone=false){ on("timeout",element,callback,canmanyclick,clickone) }
+function ontimeupdate(element,callback=function(){},canmanyclick=false,clickone=false){ on("timeupdate",element,callback,canmanyclick,clickone) }
+function ontouchcancel(element,callback=function(){},canmanyclick=false,clickone=false){ on("touchcancel",element,callback,canmanyclick,clickone) }
+function ontouchend(element,callback=function(){},canmanyclick=false,clickone=false){ on("touchend",element,callback,canmanyclick,clickone) }
+function ontouchmove(element,callback=function(){},canmanyclick=false,clickone=false){ on("touchmove",element,callback,canmanyclick,clickone) }
+function ontouchstart(element,callback=function(){},canmanyclick=false,clickone=false){ on("touchstart",element,callback,canmanyclick,clickone) }
+function ontransitioncancel(element,callback=function(){},canmanyclick=false,clickone=false){ on("transitioncancel",element,callback,canmanyclick,clickone) }
+function ontransitionend(element,callback=function(){},canmanyclick=false,clickone=false){ on("transitionend",element,callback,canmanyclick,clickone) }
+function ontransitionstart(element,callback=function(){},canmanyclick=false,clickone=false){ on("transitionstart",element,callback,canmanyclick,clickone) }
+function onunhandledrejection(element,callback=function(){},canmanyclick=false,clickone=false){ on("unhandledrejection",element,callback,canmanyclick,clickone) }
+function onunload(element,callback=function(){},canmanyclick=false,clickone=false){ on("unload",element,callback,canmanyclick,clickone) }
+function onvolumechange(element,callback=function(){},canmanyclick=false,clickone=false){ on("volumechange",element,callback,canmanyclick,clickone) }
+function onwaiting(element,callback=function(){},canmanyclick=false,clickone=false){ on("waiting",element,callback,canmanyclick,clickone) }
+function onwheel(element,callback=function(){},canmanyclick=false,clickone=false){ on("wheel",element,callback,canmanyclick,clickone) }
 
 // click
 function click(element){

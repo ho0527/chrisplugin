@@ -75,6 +75,14 @@ body[scroll]::-webkit-scrollbar-thumb{
     border-radius: 1000px;
 } */
 
+.macossectiondiv{
+	overflow: auto;
+}
+
+.macossectiondivx{
+	overflow: auto hidden;
+}
+
 .macossectiondivy{
 	overflow: hidden auto;
 }
